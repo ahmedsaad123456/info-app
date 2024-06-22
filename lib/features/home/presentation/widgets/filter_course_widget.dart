@@ -19,13 +19,17 @@ class FilterCourseWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     final homeCubit = BlocProvider.of<HomeCubit>(context);
     List<String> categories;
+    List<String> selectedCategories;
 
     if (type == 1) {
       categories = homeCubit.demoCategories;
+      selectedCategories = homeCubit.selectedDemoCategories;
     } else if (type == 2) {
       categories = homeCubit.neroCategories;
+      selectedCategories = homeCubit.selectedNeroCategories;
     } else {
       categories = homeCubit.neroPlusCategories;
+      selectedCategories = homeCubit.selectedNeroPlusCategories;
     }
 
     return Column(
@@ -41,7 +45,7 @@ class FilterCourseWidget extends StatelessWidget {
                       child: ToggleButtonWidget(
                     text: category,
                     type: type,
-                    isOneButton: categories.length == 1 ? true : false,
+                    isSelected: selectedCategories.contains(category),
                   )))
               .toList(),
         ),
@@ -50,42 +54,53 @@ class FilterCourseWidget extends StatelessWidget {
   }
 }
 
+
 class ToggleButtonWidget extends StatefulWidget {
   final String text;
   final int type;
-  final bool isOneButton;
+  final bool isSelected;
 
-  const ToggleButtonWidget(
-      {super.key,
-      required this.text,
-      required this.type,
-      required this.isOneButton});
+  ToggleButtonWidget({
+    super.key,
+    required this.text,
+    required this.type,
+    this.isSelected = false,
+  });
 
   @override
   _ToggleButtonWidgetState createState() => _ToggleButtonWidgetState();
 }
 
 class _ToggleButtonWidgetState extends State<ToggleButtonWidget> {
-  bool isSelected = false;
+  late bool isSelected;
+
+  @override
+  void initState() {
+    super.initState();
+    isSelected = widget.isSelected;
+  }
 
   void toggleButton() {
     setState(() {
-      isSelected = !isSelected;
-      BlocProvider.of<HomeCubit>(context)
+      bool isChoosed = BlocProvider.of<HomeCubit>(context)
           .toggleCategory(widget.text, widget.type);
+
+      if (isChoosed) {
+        isSelected = !isSelected;
+      }
     });
   }
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: widget.isOneButton ? () {} : toggleButton,
+      onTap: toggleButton,
       child: ButtonWidget(
         padding: 10,
         text: widget.text,
         height: 43,
-        color: isSelected || widget.isOneButton ? Colors.white : Colors.white.withOpacity(0.08),
-        textColor: isSelected || widget.isOneButton ? Colors.black : Colors.white.withOpacity(0.64),
+        color: isSelected ? Colors.white : Colors.white.withOpacity(0.08),
+        textColor: isSelected ? Colors.black : Colors.white.withOpacity(0.64),
         boxBorder: !isSelected
             ? Border.all(width: 2, color: Colors.white.withOpacity(0.08))
             : null,

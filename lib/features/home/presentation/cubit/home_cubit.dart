@@ -44,6 +44,7 @@ class HomeCubit extends Cubit<HomeStates> {
   List<String> demoCategories = [];
   List<String> neroCategories = [];
   List<String> neroPlusCategories = [];
+  Map<String, List<CourseEntity>> categoryCourseMap = {};
 
   Future<void> getCourses() async {
     if (courseModel == null) {
@@ -57,61 +58,120 @@ class HomeCubit extends Cubit<HomeStates> {
           courseModel = r.courses;
           categorizeCourses();
           gatherCategories();
+          createCategoryCourseMap();
           emit(GetCoursesSuccessState());
         },
       );
     }
   }
 
+  List<String> selectedDemoCategories = [];
+  List<String> selectedNeroCategories = [];
+  List<String> selectedNeroPlusCategories = [];
+
   void categorizeCourses() {
-    demoCourses =
-        courseModel?.where((course) => course.type == 'demo').toList() ?? [];
-    neroCourses =
-        courseModel?.where((course) => course.type == 'nero').toList() ?? [];
-    neroPlusCourses =
-        courseModel?.where((course) => course.type == 'nero_plus').toList() ??
-            [];
+    demoCategories = courseModel
+            ?.where((course) => course.type == 'demo')
+            .map((course) => course.category!)
+            .toSet()
+            .toList() ??
+        [];
+    neroCategories = courseModel
+            ?.where((course) => course.type == 'nero')
+            .map((course) => course.category!)
+            .toSet()
+            .toList() ??
+        [];
+    neroPlusCategories = courseModel
+            ?.where((course) => course.type == 'nero_plus')
+            .map((course) => course.category!)
+            .toSet()
+            .toList() ??
+        [];
+
+    demoCourses = courseModel
+            ?.where((course) =>
+                course.type == 'demo' &&
+                course.category == demoCategories.first)
+            .toList() ??
+        [];
+    neroCourses = courseModel
+            ?.where((course) =>
+                course.type == 'nero' &&
+                course.category == neroCategories.first)
+            .toList() ??
+        [];
+    neroPlusCourses = courseModel
+            ?.where((course) =>
+                course.type == 'nero_plus' &&
+                course.category == neroPlusCategories.first)
+            .toList() ??
+        [];
   }
 
   void gatherCategories() {
-    demoCategories =
-        demoCourses.map((course) => course.category!).toSet().toList();
-    neroCategories =
-        neroCourses.map((course) => course.category!).toSet().toList();
-    neroPlusCategories =
-        neroPlusCourses.map((course) => course.category!).toSet().toList();
+    // Ensure at least one category is selected for each type
+    selectedDemoCategories =
+        demoCategories.isNotEmpty ? [demoCategories.first] : [];
+    selectedNeroCategories =
+        neroCategories.isNotEmpty ? [neroCategories.first] : [];
+    selectedNeroPlusCategories =
+        neroPlusCategories.isNotEmpty ? [neroPlusCategories.first] : [];
   }
 
-  List<String> selectedDemoCategories = [];
-  List<String> selectedPurCategories = [];
-  List<String> selectedNotPurCategories = [];
-
-  void toggleCategory(String category, int type) {
+  bool toggleCategory(String category, int type) {
     if (type == 1) {
       if (selectedDemoCategories.contains(category)) {
-        selectedDemoCategories.remove(category);
+        if (selectedDemoCategories.length > 1) {
+          selectedDemoCategories.remove(category);
+          getFilteredDemoCourses();
+          emit(GetCoursesSuccessState());
+          return true;
+        } else {
+          return false;
+        }
       } else {
-        selectedDemoCategories.add(category);
+        selectedDemoCategories.add(category); // Allow multiple selections
+        getFilteredDemoCourses();
+        emit(GetCoursesSuccessState());
+        return true;
       }
-      getFilteredDemoCourses();
-      emit(GetCoursesSuccessState());
     } else if (type == 2) {
-      if (selectedPurCategories.contains(category)) {
-        selectedPurCategories.remove(category);
+      if (selectedNeroCategories.contains(category)) {
+        if (selectedNeroCategories.length > 1) {
+          selectedNeroCategories.remove(category);
+          getFilteredNeroCourses();
+          emit(GetCoursesSuccessState());
+          return true;
+        } else {
+          // Can't remove the last category
+          return false;
+        }
       } else {
-        selectedPurCategories.add(category);
+        selectedNeroCategories.add(category); // Allow multiple selections
+        getFilteredNeroCourses();
+        emit(GetCoursesSuccessState());
+        return true;
       }
-      getFilteredNeroCourses();
-      emit(GetCoursesSuccessState());
     } else if (type == 3) {
-      if (selectedNotPurCategories.contains(category)) {
-        selectedNotPurCategories.remove(category);
+      if (selectedNeroPlusCategories.contains(category)) {
+        if (selectedNeroPlusCategories.length > 1) {
+          selectedNeroPlusCategories.remove(category);
+          getFilteredNeroPlusCourses();
+          emit(GetCoursesSuccessState());
+          return true;
+        } else {
+          // Can't remove the last category
+          return false;
+        }
       } else {
-        selectedNotPurCategories.add(category);
+        selectedNeroPlusCategories.add(category); // Allow multiple selections
+        getFilteredNeroPlusCourses();
+        emit(GetCoursesSuccessState());
+        return true;
       }
-      getFilteredNeroPlusCourses();
-      emit(GetCoursesSuccessState());
     }
+    return false;
   }
 
   void getFilteredDemoCourses() {
@@ -127,10 +187,10 @@ class HomeCubit extends Cubit<HomeStates> {
   }
 
   void getFilteredNeroCourses() {
-    if (selectedPurCategories.isNotEmpty) {
+    if (selectedNeroCategories.isNotEmpty) {
       neroCourses = courseModel!
           .where((course) => course.type == 'nero')
-          .where((course) => selectedPurCategories.contains(course.category))
+          .where((course) => selectedNeroCategories.contains(course.category))
           .toList();
     } else {
       neroCourses =
@@ -139,15 +199,27 @@ class HomeCubit extends Cubit<HomeStates> {
   }
 
   void getFilteredNeroPlusCourses() {
-    if (selectedNotPurCategories.isNotEmpty) {
+    if (selectedNeroPlusCategories.isNotEmpty) {
       neroPlusCourses = courseModel!
           .where((course) => course.type == 'nero_plus')
-          .where((course) => selectedNotPurCategories.contains(course.category))
+          .where(
+              (course) => selectedNeroPlusCategories.contains(course.category))
           .toList();
     } else {
       neroPlusCourses =
           courseModel?.where((course) => course.type == 'nero_plus').toList() ??
               [];
+    }
+  }
+
+  void createCategoryCourseMap() {
+    categoryCourseMap.clear();
+    for (var course in courseModel!) {
+      if (categoryCourseMap.containsKey(course.category)) {
+        categoryCourseMap[course.category]!.add(course);
+      } else {
+        categoryCourseMap[course.category!] = [course];
+      }
     }
   }
 }

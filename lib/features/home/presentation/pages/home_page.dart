@@ -22,7 +22,9 @@ class HomePage extends StatelessWidget {
       },
       builder: (context, state) {
         HomeCubit.get(context).getCourses();
-        return HomeCubit.get(context).courseModel != null
+        final homeCubit = HomeCubit.get(context);
+
+        return homeCubit.courseModel != null
             ? Column(
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
@@ -45,7 +47,7 @@ class HomePage extends StatelessWidget {
                   ),
                   Text(
                     textAlign: TextAlign.center,
-                    'Более 500 тысяч человек смогли изменить свою жизнь через работу с подсознанием по уникальной методике Инны ТИ. Благодаря работе с подсознанием, можно быстро и легко изменить все сферы жизни. На платформе вы найдёте более 100 методик. Подписка открывает доступ к огромной базе курсов, семинаров и тренажёров для работы с подсознанием',
+                    'Более 500 тысяч человек смогли изменить свою жизнь через работу с подсознанием по уникальной методике Инны ТИ. Благодаря работе с подсознанием, можно быстро и легко изменить все сферы жизни. На платформе вы найдёте более 100 методик. Подписка открывает доступ к огромной базе курсов, семинаров и тренажёров для работы с подсознанием',
                     style: TextStyle(
                         fontWeight: FontWeight.w400,
                         fontSize: 16,
@@ -71,7 +73,7 @@ class HomePage extends StatelessWidget {
                   ),
                   CoursesListView(
                     type: 1,
-                    courses: HomeCubit.get(context).demoCourses,
+                    courses: homeCubit.demoCourses,
                     title: 'Демо курсы',
                     subtitle:
                         'Авторские курсы, которые доступны всем пользователям нашего приложения',
@@ -82,10 +84,10 @@ class HomePage extends StatelessWidget {
                   ),
                   CoursesListView(
                     type: 2,
-                    courses: HomeCubit.get(context).neroCourses,
+                    courses: homeCubit.neroCourses,
                     title: 'Подписка Нейро',
                     subtitle:
-                        'Авторские курсы, которые доступны только по подписке Нейро и выше',
+                        'Авторские курсы, которые доступны только по подписке Нейро и выше',
                     courseStateEnum: CourseStateEnum.NOT_PURCHASED,
                     isNotPlus: true,
                   ),
@@ -94,10 +96,10 @@ class HomePage extends StatelessWidget {
                   ),
                   CoursesListView(
                       type: 3,
-                      courses: HomeCubit.get(context).neroPlusCourses,
+                      courses: homeCubit.neroPlusCourses,
                       title: 'Подписка Нейро+',
                       subtitle:
-                          'Авторские курсы, которые доступны только по подписке Нейро+',
+                          'Авторские курсы, которые доступны только по подписке Нейро+',
                       courseStateEnum: CourseStateEnum.NOT_PURCHASED),
                   const SizedBox(
                     height: 32,
@@ -119,42 +121,24 @@ class HomePage extends StatelessWidget {
                   const SizedBox(
                     height: 15,
                   ),
-                  const CourseByCategory(
-                    title: 'Отношения',
-                    courseStateEnum: CourseStateEnum.VIEWED,
-                    titleContainer: 'Нейро',
-                    isBookmark: true,
-                  ),
-                  const SizedBox(
-                    height: 15,
-                  ),
-                  const CourseByCategory(
-                    title: 'Здоровье',
-                    courseStateEnum: CourseStateEnum.NOT_PURCHASED,
-                    isBookmark: false,
-                    isNotPlus: false,
-                  ),
-                  const SizedBox(
-                    height: 15,
-                  ),
-                  const CourseByCategory(
-                    title: 'Финансы',
-                    courseStateEnum: CourseStateEnum.VIEWED,
-                    titleContainer: 'Просмотрено',
-                    isBookmark: false,
-                  ),
-                  const SizedBox(
-                    height: 15,
-                  ),
-                  const CourseByCategory(
-                    title: 'Отношения',
-                    courseStateEnum: CourseStateEnum.NOT_PURCHASED,
-                    isBookmark: false,
-                    isNotPlus: true,
-                  ),
+                  ...homeCubit.categoryCourseMap.entries.map((entry) {
+                    return Column(
+                      children: [
+                        CourseByCategory(
+                          title: entry.key,
+                          courses: entry.value,
+                          courseStateEnum: CourseStateEnum.VIEWED,
+                          isBookmark: true,
+                        ),
+                        const SizedBox(
+                          height: 15,
+                        ),
+                      ],
+                    );
+                  }).toList(),
                 ],
               )
-            : Center(
+            : const Center(
                 child: CircularProgressIndicator(),
               );
       },
