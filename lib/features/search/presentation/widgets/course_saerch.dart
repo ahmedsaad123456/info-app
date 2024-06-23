@@ -4,7 +4,9 @@ import 'package:info_app/features/courses/widgets/new_course_widget.dart';
 import 'package:info_app/features/home/domain/entities/course_entity.dart';
 
 class CourseSaerch extends StatelessWidget {
-  const CourseSaerch({super.key});
+  const CourseSaerch({super.key, required this.courses});
+
+  final List<CourseEntity> courses;
 
   @override
   Widget build(BuildContext context) {
@@ -22,17 +24,17 @@ class CourseSaerch extends StatelessWidget {
         SizedBox(
           width: 350,
           child: ListView.builder(
-            itemCount: 4,
+            itemCount: courses.length,
             physics: const NeverScrollableScrollPhysics(),
             shrinkWrap: true,
             itemBuilder: (context, index) {
               return Padding(
                 padding: EdgeInsets.symmetric(vertical: 5),
                 child: NewCourseWidget(
-                  courseEntity: CourseEntity(),
+                  courseEntity: courses[index],
+                  isSearch: true,
                   isHistory: false,
                   courseStateEnum: CourseStateEnum.VIEWED,
-                  isBookmark: false,
                   title: 'Просмотрено',
                 ),
               );

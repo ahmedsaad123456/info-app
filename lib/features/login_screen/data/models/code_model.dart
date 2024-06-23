@@ -1,3 +1,4 @@
+import 'package:info_app/features/home/domain/entities/request_favorites_entity.dart';
 import 'package:info_app/features/login_screen/domain/entities/code_entity.dart';
 
 class CodeModel extends CodeEntity {
@@ -5,7 +6,8 @@ class CodeModel extends CodeEntity {
 
   CodeModel.fromJson(Map<String, dynamic> json) {
     result = json['result'];
-    account = AccountModel.fromJson(json['account']);
+    account =
+        json['account'] != null ? AccountModel.fromJson(json['account']) : null;
     token = json['token'];
   }
 
@@ -30,13 +32,14 @@ class AccountModel extends AccountEntity {
   });
 
   AccountModel.fromJson(Map<String, dynamic> json) {
-    print(json['avatar']);
     id = json['id'];
     phone = json['phone'];
     name = json['name'];
     email = json['email'];
     avatar = json['avatar'];
-    favorites = json['favorites'];
+    // favorites = json['favorites'] != null
+    //     ? RequestFavoritesEntity.fromJson(json['favorites'])
+    //     : null;
     isAdmin = json['is_admin'];
   }
 
@@ -47,7 +50,7 @@ class AccountModel extends AccountEntity {
     data['name'] = name;
     data['email'] = email;
     data['avatar'] = avatar;
-    data['favorites'] = favorites;
+    // data['favorites'] = favorites?.toJson();
     data['is_admin'] = isAdmin;
     return data;
   }

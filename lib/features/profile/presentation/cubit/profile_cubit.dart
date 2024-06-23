@@ -1,14 +1,9 @@
 import 'dart:convert';
-import 'dart:io';
-import 'package:file_picker/file_picker.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:http/http.dart' as http;
-import 'package:image_picker_for_web/image_picker_for_web.dart';
-import 'package:image_picker_web/image_picker_web.dart';
 import 'package:info_app/core/constants.dart';
-import 'package:image_picker_platform_interface/image_picker_platform_interface.dart';
 
 import 'package:info_app/core/shared/datasources/local/cache_helper.dart';
 import 'package:info_app/features/login_screen/data/models/code_model.dart';
@@ -16,7 +11,6 @@ import 'package:info_app/features/login_screen/data/models/code_model.dart';
 import 'package:info_app/features/profile/domain/usecases/profile_usecase.dart';
 import 'package:info_app/features/profile/presentation/cubit/profile_state.dart';
 import 'package:info_app/locator.dart';
-import 'package:image_picker_for_web/src/image_resizer.dart';
 
 class ProfileCubit extends Cubit<ProfileState> {
   ProfileCubit(this._profileUsecase) : super(ProfileInitialState());
@@ -70,26 +64,26 @@ class ProfileCubit extends Cubit<ProfileState> {
   }
 
   Future<void> pickImage() async {
-    emit(ProfileUpdateLoadingState());
-    try {
-      Uint8List? bytesFromPicker = await ImagePickerWeb.getImageAsBytes();
-      try {
-        String? imageName = await uploadImage(bytesFromPicker!);
+    // emit(ProfileUpdateLoadingState());
+    // try {
+    //   Uint8List? bytesFromPicker = await ImagePickerWeb.getImageAsBytes();
+    //   try {
+    //     String? imageName = await uploadImage(bytesFromPicker!);
 
-        if (imageName != null) {
-          print(imageName);
-          getCodeModel();
-          codeModel!.account!.avatar = imageName;
-          emit(ProfileUpdateSuccessState());
-        } else {
-          emit(ProfileUpdateErrorState(error: "Image upload failed"));
-        }
-      } catch (e) {
-        print(e);
-      }
-    } catch (e) {
-      emit(ProfileUpdateErrorState(error: e.toString()));
-    }
+    //     if (imageName != null) {
+    //       print(imageName);
+    //       getCodeModel();
+    //       codeModel!.account!.avatar = imageName;
+    //       emit(ProfileUpdateSuccessState());
+    //     } else {
+    //       emit(ProfileUpdateErrorState(error: "Image upload failed"));
+    //     }
+    //   } catch (e) {
+    //     print(e);
+    //   }
+    // } catch (e) {
+    //   emit(ProfileUpdateErrorState(error: e.toString()));
+    // }
   }
 
   Future<String?> uploadImage(Uint8List image) async {

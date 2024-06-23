@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:info_app/features/courses/widgets/course_series_item.dart';
 import 'package:info_app/features/courses/course_state_enum.dart';
+import 'package:info_app/features/home/domain/entities/material_entity.dart';
 
 class BrowseWidget extends StatelessWidget {
   const BrowseWidget({super.key, this.subtitle});
@@ -37,14 +38,14 @@ class BrowseWidget extends StatelessWidget {
             itemCount: 15,
             scrollDirection: Axis.horizontal,
             itemBuilder: (context, index) {
-              return const Padding(
+              return Padding(
                   padding: EdgeInsets.only(right: 20),
                   child: AspectRatio(
                       aspectRatio: 180 / 100,
                       child: CourseSeriesItem(
                           containerTitle: 'Просмотрено',
-                          title: 'Новое видео',
-                          time: '20:18 / 20:18',
+                          materialEntity:MaterialEntity() ,
+
                           courseStateEnum: CourseStateEnum.NOT_PURCHASED)));
             },
           ),

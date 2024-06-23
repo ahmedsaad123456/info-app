@@ -18,10 +18,10 @@ class HomePage extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocConsumer<HomeCubit, HomeStates>(
       listener: (context, state) {
-        // TODO: implement listener
       },
       builder: (context, state) {
         HomeCubit.get(context).getCourses();
+
         final homeCubit = HomeCubit.get(context);
 
         return homeCubit.courseModel != null

@@ -3,9 +3,12 @@ import 'package:flutter/widgets.dart';
 import 'package:info_app/features/courses/widgets/course_series_item.dart';
 import 'package:info_app/features/courses/course_state_enum.dart';
 import 'package:info_app/features/courses/widgets/title_widget.dart';
+import 'package:info_app/features/home/domain/entities/material_entity.dart';
 
 class CourseSeriesWidget extends StatelessWidget {
-  const CourseSeriesWidget({super.key});
+  const CourseSeriesWidget({super.key, required this.materialEntity});
+
+  final List< MaterialEntity> materialEntity;
 
   @override
   Widget build(BuildContext context) {
@@ -20,15 +23,14 @@ class CourseSeriesWidget extends StatelessWidget {
           height: 10,
         ),
         ListView.builder(
-          itemCount: 4,
+          itemCount: materialEntity.length,
           physics: const NeverScrollableScrollPhysics(),
           shrinkWrap: true,
           itemBuilder: (context, index) {
-            return const Padding(
+            return Padding(
               padding: EdgeInsets.symmetric(vertical: 5),
               child: CourseSeriesItem(
-                title: 'Серия 1 — Тизер',
-                time: '20:18',
+                materialEntity: materialEntity[index],
                 courseStateEnum: CourseStateEnum.VIEWED,
                 containerTitle: 'Просмотрено',
               ),

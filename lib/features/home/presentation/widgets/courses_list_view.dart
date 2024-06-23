@@ -41,7 +41,6 @@ class CoursesListView extends StatelessWidget {
                     courseEntity: courses[index],
                     courseStateEnum: courseStateEnum,
                     isNotPlus: isNotPlus,
-                    isBookmark: false,
                     isHistory: false,
                   ));
             },

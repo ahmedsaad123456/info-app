@@ -51,7 +51,6 @@ class CoursesPage extends StatelessWidget {
                   courseEntity: CourseEntity(),
                   isHistory: false,
                   courseStateEnum: courseStateEnum,
-                  isBookmark: false,
                   title: 'Просмотрено',
                 ),
                 const SizedBox(
@@ -83,7 +82,7 @@ class CoursesPage extends StatelessWidget {
                 ),
                 const Align(
                     alignment: Alignment.centerLeft,
-                    child: CourseSeriesWidget()),
+                    child: CourseSeriesWidget(materialEntity: [],)),
                 const SizedBox(
                   height: 16,
                 ),

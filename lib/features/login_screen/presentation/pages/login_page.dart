@@ -65,7 +65,7 @@ class LoginPage extends StatelessWidget {
                           height: 8,
                         ),
                         Text(
-                          'Введите номер телефона, чтобы \nиспользовать сервис на любом устройстве',
+                          'Введите электронную почту, чтобы использовать сервис на любом устройстве',
                           textAlign: TextAlign.center,
                           style: TextStyle(
                             fontSize: 16,

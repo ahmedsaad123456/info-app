@@ -46,7 +46,6 @@ class CourseByCategory extends StatelessWidget {
                   courseEntity: courses[index],
                   isHistory: false,
                   courseStateEnum: courseStateEnum,
-                  isBookmark: isBookmark,
                   title: titleContainer,
                   isNotPlus: isNotPlus,
                 ),

@@ -3,7 +3,7 @@ import 'package:flutter_svg/svg.dart';
 import 'package:info_app/features/profile/presentation/pages/about_page.dart';
 import 'package:info_app/features/profile/presentation/pages/bookmarked_courses_page.dart';
 import 'package:info_app/features/profile/presentation/widgets/custom_container.dart';
-import 'package:info_app/features/profile/presentation/widgets/history_courses_page.dart';
+import 'package:info_app/features/profile/presentation/pages/history_courses_page.dart';
 import 'package:info_app/features/subscription/subscripe_page.dart';
 
 class SelectedWidget extends StatelessWidget {

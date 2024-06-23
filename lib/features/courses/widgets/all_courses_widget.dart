@@ -31,7 +31,6 @@ class AllCoursesWidget extends StatelessWidget {
                 child: NewCourseWidget(
                   courseEntity: CourseEntity(),
                   courseStateEnum: CourseStateEnum.VIEWED,
-                  isBookmark: false,
                   isHistory: false,
                   title: 'Просмотрено',
                 ),

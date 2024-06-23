@@ -7,6 +7,7 @@ class CourseEntity {
   dynamic preview;
   double? price;
   int? accessLevel;
+  bool? isFavorite;
   dynamic content;
 
   CourseEntity({
@@ -18,6 +19,7 @@ class CourseEntity {
     this.preview,
     this.price,
     this.accessLevel,
+    this.isFavorite,
     this.content,
   });
 }

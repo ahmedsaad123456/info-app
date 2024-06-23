@@ -53,8 +53,8 @@ dependencies:
   advstory: ^0.2.1
   gradient_borders: ^1.0.1
   image_network: ^2.5.6
-  image_picker_for_web: ^3.0.4
-  image_picker_web: ^4.0.0
+  # image_picker_for_web: ^3.0.4
+  # image_picker_web: ^4.0.0
 
 
 
