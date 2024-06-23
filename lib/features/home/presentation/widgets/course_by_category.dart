@@ -7,14 +7,15 @@ class CourseByCategory extends StatelessWidget {
   const CourseByCategory(
       {super.key,
       required this.title,
+      required this.courses,
       required this.courseStateEnum,
       this.titleContainer,
       required this.isBookmark,
       this.isNotPlus});
 
   final String title;
+  final List<CourseEntity> courses;
   final String? titleContainer;
-
   final CourseStateEnum courseStateEnum;
   final bool isBookmark;
   final bool? isNotPlus;
@@ -36,13 +37,13 @@ class CourseByCategory extends StatelessWidget {
           height: 200,
           child: ListView.builder(
             shrinkWrap: true,
-            itemCount: 15,
+            itemCount: courses.length,
             scrollDirection: Axis.horizontal,
             itemBuilder: (context, index) {
               return Padding(
                 padding: const EdgeInsets.only(right: 20),
                 child: NewCourseWidget(
-                  courseEntity: CourseEntity(),
+                  courseEntity: courses[index],
                   isHistory: false,
                   courseStateEnum: courseStateEnum,
                   isBookmark: isBookmark,
