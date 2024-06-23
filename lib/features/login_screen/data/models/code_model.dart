@@ -30,6 +30,7 @@ class AccountModel extends AccountEntity {
   });
 
   AccountModel.fromJson(Map<String, dynamic> json) {
+    print(json['avatar']);
     id = json['id'];
     phone = json['phone'];
     name = json['name'];

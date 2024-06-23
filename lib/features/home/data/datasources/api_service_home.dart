@@ -6,12 +6,9 @@ import 'package:info_app/features/home/data/models/course_model.dart';
 class ApiServiceHome extends ApiBase {
   Future<CourseResponseModel> getCourses() async {
     return executeAndHandleErrorServer<CourseResponseModel>(() async {
-      final response = await get(
-        '$BASE_URL/courses/',
-         headers: {
-          'Authorization' : token!,
-        }
-      );
+      final response = await get('$BASE_URL/courses', headers: {
+        'Authorization': token ?? "",
+      });
       return CourseResponseModel.fromJson(response.json);
     });
   }

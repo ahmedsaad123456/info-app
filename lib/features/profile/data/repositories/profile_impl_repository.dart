@@ -10,11 +10,18 @@ class ProfileImplRepository implements ProfileRepository {
   ProfileImplRepository(this.profileService);
 
   @override
-  Future<Either<String, CodeModel>> updateProfile(String name, String email, String phone) {
-     return executeAndHandleError<CodeModel>(() async {
+  Future<Either<String, CodeModel>> updateProfile(
+      String name, String email, String phone) {
+    return executeAndHandleError<CodeModel>(() async {
+      final res = await profileService.updateProfile(name, email, phone);
+      return res;
+    });
+  }
 
-      final res =
-          await profileService.updateProfile( name,email, phone);
+  @override
+  Future<Either<String, CodeModel>> getProfile() {
+    return executeAndHandleError<CodeModel>(() async {
+      final res = await profileService.getProfile();
       return res;
     });
   }

@@ -32,7 +32,7 @@ class HomeCubit extends Cubit<HomeStates> {
 
   Color getIconColor(int itemIndex) {
     return index == itemIndex
-        ? Color(0xFFF8206E)
+        ? const Color(0xFFF8206E)
         : Colors.white.withOpacity(0.64);
   }
 

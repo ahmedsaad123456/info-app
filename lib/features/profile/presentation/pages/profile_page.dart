@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:image_network/image_network.dart';
 import 'package:info_app/core/constants.dart';
 import 'package:info_app/features/home/presentation/widgets/browse_widget.dart';
 import 'package:info_app/features/login_screen/data/models/code_model.dart';
@@ -23,6 +24,7 @@ class ProfilePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final profileCubit = ProfileCubit.get(context);
+
     return BlocConsumer<ProfileCubit, ProfileState>(
       listener: (context, state) {
         if (state is ProfileUpdateSuccessState) {
@@ -31,6 +33,7 @@ class ProfilePage extends StatelessWidget {
       },
       builder: (context, state) {
         CodeModel model = ProfileCubit.get(context).codeModel!;
+        print("$BASE_URL/avatars/${model.account!.avatar!}");
         return Column(
           children: [
             const SizedBox(
@@ -51,7 +54,7 @@ class ProfilePage extends StatelessWidget {
             RichText(
               textAlign: TextAlign.center,
               text: TextSpan(
-                style: TextStyle(
+                style: const TextStyle(
                     fontSize: 24,
                     color: Colors.white,
                     fontWeight: FontWeight.w500,
@@ -59,24 +62,47 @@ class ProfilePage extends StatelessWidget {
                 children: [
                   TextSpan(
                     text: model.account?.name ?? '',
-                    style: TextStyle(color: Color(0xFFF8206E)),
+                    style: const TextStyle(color: Color(0xFFF8206E)),
                   ),
-                  TextSpan(text: ', доброе утро! '),
+                  const TextSpan(text: ', доброе утро! '),
                 ],
               ),
             ),
             const SizedBox(
               height: 16,
             ),
-            //  GestureDetector(
-            //   onTap: () {
-            //     profileCubit.pickImage();
-            //   },
-            //   child: model.account?.avatar != null
-            //       ? Image.network(model.account!.avatar!)
-            //       : Image.network('${BASE_URL}/assets/icons/avatar.png', width: 100, height: 100),
-            // ),
-            Image.asset('assets/icons/avatar.png'),
+            GestureDetector(
+              onTap: () {
+                profileCubit.pickImage();
+              },
+              child: model.account?.avatar != null
+                  ? ImageNetwork(
+                      image:
+                          "https://api.neurosubconscious.ru/avatars/${model.account!.avatar!}",
+                      height: 150,
+                      width: 150,
+                      duration: 1500,
+                      curve: Curves.easeIn,
+                      onPointer: true,
+                      debugPrint: false,
+                      fullScreen: false,
+                      fitAndroidIos: BoxFit.cover,
+                      fitWeb: BoxFitWeb.cover,
+                      borderRadius: BorderRadius.circular(70),
+                      onLoading: const CircularProgressIndicator(
+                        color: Colors.indigoAccent,
+                      ),
+                      onError: const Icon(
+                        Icons.error,
+                        color: Colors.red,
+                      ),
+                      onTap: () {
+                        profileCubit.pickImage();
+                      },
+                    )
+                  : Image.asset('assets/icons/avatar.png'),
+            ),
+            // Image.asset('assets/icons/avatar.png'),
             const SizedBox(
               height: 24,
             ),

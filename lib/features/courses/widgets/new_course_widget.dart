@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:gradient_borders/box_borders/gradient_box_border.dart';
+import 'package:image_network/image_network.dart';
 import 'package:info_app/features/courses/widgets/buy_row.dart';
 import 'package:info_app/features/courses/course_state_enum.dart';
 import 'package:info_app/features/courses/widgets/recommended_container.dart';
@@ -71,17 +72,35 @@ class _NewCourseWidgetState extends State<NewCourseWidget> {
             ClipRRect(
               borderRadius: BorderRadius.circular(8),
               child: SizedBox(
-                width: widget.isHistory ? double.infinity : 350,
-                child: widget.courseEntity.preview == null
-                    ? Image.asset(
-                        'assets/icons/course.png',
-                        fit: BoxFit.cover,
-                      )
-                    : Image.network(
-                        'https://api.neurosubconscious.ru/previews/${widget.courseEntity.preview}',
-                        fit: BoxFit.cover,
-                      ),
-              ),
+                  width: widget.isHistory ? double.infinity : 350,
+                  child: widget.courseEntity.preview == null
+                      ? Image.asset(
+                          'assets/icons/course.png',
+                          fit: BoxFit.cover,
+                        )
+                      : ImageNetwork(
+                          image:
+                              'https://api.neurosubconscious.ru/previews/${widget.courseEntity.preview}',
+                          height: 200,
+                          width: widget.isHistory ? double.infinity : 350,
+                          duration: 1500,
+                          curve: Curves.easeIn,
+                          onPointer: true,
+                          debugPrint: false,
+                          fullScreen: false,
+                          fitAndroidIos: BoxFit.cover,
+                          fitWeb: BoxFitWeb.cover,
+                          onLoading: const CircularProgressIndicator(
+                            color: Colors.indigoAccent,
+                          ),
+                          onError: const Icon(
+                            Icons.error,
+                            color: Colors.red,
+                          ),
+                          onTap: () {
+                            debugPrint("©gabriel_patrick_souza");
+                          },
+                        )),
             ),
             Positioned(
               bottom: 20,
@@ -91,7 +110,7 @@ class _NewCourseWidgetState extends State<NewCourseWidget> {
                 children: [
                   Text(
                     widget.courseEntity.name ?? '',
-                    style: TextStyle(
+                    style: const TextStyle(
                       fontSize: 28,
                       color: Colors.white,
                       fontWeight: FontWeight.w500,
