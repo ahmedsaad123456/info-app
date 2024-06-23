@@ -218,7 +218,7 @@ class HomeCubit extends Cubit<HomeStates> {
       if (categoryCourseMap.containsKey(course.category)) {
         categoryCourseMap[course.category]!.add(course);
       } else {
-        categoryCourseMap[course.category!] = [course];
+        categoryCourseMap[course.category ?? ""] = [course];
       }
     }
   }

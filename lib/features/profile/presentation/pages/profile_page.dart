@@ -76,29 +76,13 @@ class ProfilePage extends StatelessWidget {
                 profileCubit.pickImage();
               },
               child: model.account?.avatar != null
-                  ? ImageNetwork(
-                      image:
-                          "https://api.neurosubconscious.ru/avatars/${model.account!.avatar!}",
-                      height: 150,
-                      width: 150,
-                      duration: 1500,
-                      curve: Curves.easeIn,
-                      onPointer: true,
-                      debugPrint: false,
-                      fullScreen: false,
-                      fitAndroidIos: BoxFit.cover,
-                      fitWeb: BoxFitWeb.cover,
-                      borderRadius: BorderRadius.circular(70),
-                      onLoading: const CircularProgressIndicator(
-                        color: Colors.indigoAccent,
+                  ? ClipOval(
+                      child: Image.network(
+                        "$BASE_URL_AVATAR${model.account!.avatar!}",
+                        fit: BoxFit.fill,
+                        height: 100,
+                        width: 100,
                       ),
-                      onError: const Icon(
-                        Icons.error,
-                        color: Colors.red,
-                      ),
-                      onTap: () {
-                        profileCubit.pickImage();
-                      },
                     )
                   : Image.asset('assets/icons/avatar.png'),
             ),

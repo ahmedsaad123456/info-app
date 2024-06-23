@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:gradient_borders/box_borders/gradient_box_border.dart';
 import 'package:image_network/image_network.dart';
+import 'package:info_app/core/constants.dart';
 import 'package:info_app/features/courses/widgets/buy_row.dart';
 import 'package:info_app/features/courses/course_state_enum.dart';
 import 'package:info_app/features/courses/widgets/recommended_container.dart';
@@ -80,7 +81,7 @@ class _NewCourseWidgetState extends State<NewCourseWidget> {
                         )
                       : ImageNetwork(
                           image:
-                              'https://api.neurosubconscious.ru/previews/${widget.courseEntity.preview}',
+                              '$BASE_URL_PREVIEW${widget.courseEntity.preview}',
                           height: 200,
                           width: widget.isHistory ? double.infinity : 350,
                           duration: 1500,

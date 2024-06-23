@@ -40,11 +40,7 @@ class MyApp extends StatelessWidget {
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
         theme: ThemeData(fontFamily: 'SuisseIntl'),
-        home: isFirstRun
-            ? const FirstScreen()
-            : isLoggedIn
-                ? const Menu()
-                : const FirstScreen(),
+        home: isLoggedIn ? const Menu() : const FirstScreen(),
         // home: LoginPage(),
       ),
     );

@@ -1,5 +1,8 @@
-import 'package:info_app/features/login_screen/data/models/code_model.dart';
+const BASE_URL = 'https://$BASE_DOMEN/api';
 
-const BASE_URL = 'https://api.neurosubconscious.ru/api';
+const BASE_DOMEN = 'api.neurosubconscious.ai';
+
+const BASE_URL_AVATAR = 'https://$BASE_DOMEN/avatars/';
+const BASE_URL_PREVIEW = 'https://$BASE_DOMEN/previews/';
 
 late String? token;

@@ -26,7 +26,7 @@ class HomePage extends StatelessWidget {
 
         return homeCubit.courseModel != null
             ? Column(
-                crossAxisAlignment: CrossAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
@@ -135,7 +135,7 @@ class HomePage extends StatelessWidget {
                         ),
                       ],
                     );
-                  }).toList(),
+                  }),
                 ],
               )
             : const Center(
