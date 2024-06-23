@@ -41,6 +41,7 @@ class HomeCubit extends Cubit<HomeStates> {
   List<CourseEntity> demoCourses = [];
   List<CourseEntity> neroCourses = [];
   List<CourseEntity> neroPlusCourses = [];
+
   List<String> demoCategories = [];
   List<String> neroCategories = [];
   List<String> neroPlusCategories = [];

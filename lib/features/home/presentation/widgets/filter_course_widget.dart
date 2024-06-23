@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:info_app/features/courses/widgets/title_widget.dart';
+import 'package:info_app/features/courses/presentation/widgets/title_widget.dart';
 import 'package:info_app/features/home/presentation/cubit/home_cubit.dart';
 import 'package:info_app/widget/custom_button.dart';
 
@@ -54,13 +54,12 @@ class FilterCourseWidget extends StatelessWidget {
   }
 }
 
-
 class ToggleButtonWidget extends StatefulWidget {
   final String text;
   final int type;
   final bool isSelected;
 
-  ToggleButtonWidget({
+  const ToggleButtonWidget({
     super.key,
     required this.text,
     required this.type,

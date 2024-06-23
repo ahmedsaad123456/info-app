@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:info_app/features/courses/widgets/title_widget.dart';
+import 'package:info_app/features/courses/presentation/widgets/title_widget.dart';
 import 'package:info_app/widget/custom_button.dart';
 
 class AboutPage extends StatelessWidget {

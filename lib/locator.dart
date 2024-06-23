@@ -1,6 +1,11 @@
 import 'package:get_it/get_it.dart';
 import 'package:info_app/core/shared/datasources/local/cache_helper.dart';
 import 'package:info_app/core/shared/usecases/network_info.dart';
+import 'package:info_app/features/courses/data/datasources/api_service_course.dart';
+import 'package:info_app/features/courses/data/repositories/course_impl_repository.dart';
+import 'package:info_app/features/courses/domain/repositories/course_repository.dart';
+import 'package:info_app/features/courses/domain/usecases/course_usecase.dart';
+import 'package:info_app/features/courses/presentation/cubit/course_cubit.dart';
 import 'package:info_app/features/home/data/datasources/api_service_home.dart';
 import 'package:info_app/features/home/data/repositories/home_impl_repository.dart';
 import 'package:info_app/features/home/domain/repositories/home_repository.dart';
@@ -26,11 +31,13 @@ Future<void> setupLocator() async {
   locator.registerFactory(() => AuthCubit(locator()));
   locator.registerFactory(() => HomeCubit(locator()));
   locator.registerFactory(() => ProfileCubit(locator()));
+  locator.registerLazySingleton(() => CourseCubit(locator()));
 
   // //USECASES
   locator.registerLazySingleton(() => AuthUseCase(locator()));
   locator.registerLazySingleton(() => ProfileUsecase(locator()));
   locator.registerLazySingleton(() => HomeUsecase(locator()));
+  locator.registerLazySingleton(() => CourseUseCase(locator()));
 
   // //CORE
   // locator.registerLazySingleton(() => NetworkInfoImpl(locator()));
@@ -39,20 +46,23 @@ Future<void> setupLocator() async {
   locator.registerLazySingleton<AuthRepository>(
       () => AuthImplRepository(locator()));
 
+  locator.registerLazySingleton<CourseRepository>(
+      () => CourseImplRepository(locator()));
+
   locator.registerLazySingleton<ProfileRepository>(
     () => ProfileImplRepository(locator()),
   );
 
-    locator.registerLazySingleton<HomeRepository>(
+  locator.registerLazySingleton<HomeRepository>(
     () => HomeImplRepository(locator()),
   );
   // //DATASOURSE
   locator.registerLazySingleton(() => ApiServiceAuth());
+  locator.registerLazySingleton(() => ApiServiceCourse());
   locator.registerLazySingleton(
     () => ApiserviceProfile(),
   );
-    locator.registerLazySingleton(() => ApiServiceHome());
-
+  locator.registerLazySingleton(() => ApiServiceHome());
 
   // //EXTRNAL
   locator.registerLazySingleton(() => SharedPreferences.getInstance());

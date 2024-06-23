@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:info_app/features/courses/course_state_enum.dart';
-import 'package:info_app/features/courses/widgets/new_course_widget.dart';
+import 'package:info_app/features/courses/presentation/widgets/new_course_widget.dart';
 import 'package:info_app/features/home/domain/entities/course_entity.dart';
 
 class CourseSaerch extends StatelessWidget {
@@ -27,7 +27,7 @@ class CourseSaerch extends StatelessWidget {
             shrinkWrap: true,
             itemBuilder: (context, index) {
               return Padding(
-                padding: EdgeInsets.symmetric(vertical: 5),
+                padding: const EdgeInsets.symmetric(vertical: 5),
                 child: NewCourseWidget(
                   courseEntity: CourseEntity(),
                   isHistory: false,

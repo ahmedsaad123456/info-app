@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:info_app/features/courses/course_state_enum.dart';
-import 'package:info_app/features/courses/pages/courses_page.dart';
+import 'package:info_app/features/courses/presentation/pages/courses_page.dart';
 import 'package:info_app/features/login_screen/presentation/pages/login_page.dart';
 import 'package:info_app/widget/custom_button.dart';
 
@@ -80,8 +80,7 @@ class _FirstScreenState extends State<FirstScreen> {
                         Navigator.pushReplacement<void, void>(
                           context,
                           MaterialPageRoute<void>(
-                            builder: (BuildContext context) =>
-                                LoginPage(),
+                            builder: (BuildContext context) => LoginPage(),
                           ),
                         );
                       },

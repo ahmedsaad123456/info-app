@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:info_app/features/courses/widgets/course_series_item.dart';
+import 'package:info_app/features/courses/presentation/widgets/course_series_item.dart';
 import 'package:info_app/features/courses/course_state_enum.dart';
-import 'package:info_app/features/courses/widgets/new_course_widget.dart';
+import 'package:info_app/features/courses/presentation/widgets/new_course_widget.dart';
 import 'package:info_app/features/home/domain/entities/course_entity.dart';
 
 class HistoryCoursesPage extends StatelessWidget {
@@ -95,7 +95,7 @@ class HistoryCoursesPage extends StatelessWidget {
                   shrinkWrap: true,
                   itemBuilder: (context, index) {
                     return Padding(
-                        padding: EdgeInsets.only(bottom: 10),
+                        padding: const EdgeInsets.only(bottom: 10),
                         child: NewCourseWidget(
                           courseEntity: CourseEntity(),
                           isHistory: false,

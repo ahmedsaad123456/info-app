@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:info_app/features/courses/widgets/buy_row.dart';
+import 'package:info_app/features/courses/presentation/widgets/buy_row.dart';
 import 'package:info_app/features/courses/course_state_enum.dart';
-import 'package:info_app/features/courses/widgets/recommended_container.dart';
+import 'package:info_app/features/courses/presentation/widgets/recommended_container.dart';
 
 class CourseSeriesItem extends StatelessWidget {
   const CourseSeriesItem({
@@ -21,23 +21,29 @@ class CourseSeriesItem extends StatelessWidget {
       children: [
         Container(
           decoration: ShapeDecoration(
-              gradient: courseStateEnum == CourseStateEnum.NOT_PURCHASED
-                  ? const LinearGradient(
-                      begin: Alignment.centerRight,
-                      end: Alignment.centerLeft,
-                      colors: [
-                        Color.fromRGBO(255, 136, 136, 1),
-                        Color.fromRGBO(255, 55, 151, 1),
-                      ],
-                    )
-                  : null,
-              shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(8),
-                  side: BorderSide(
-                      width: 1, color: Colors.white.withOpacity(0.08)))),
-          height: 100,
+            gradient: courseStateEnum == CourseStateEnum.NOT_PURCHASED
+                ? const LinearGradient(
+                    begin: Alignment.centerRight,
+                    end: Alignment.centerLeft,
+                    colors: [
+                      Color.fromRGBO(255, 136, 136, 1),
+                      Color.fromRGBO(255, 55, 151, 1),
+                    ],
+                  )
+                : null,
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(8),
+              side: BorderSide(
+                width: 1,
+                color: Colors.white.withOpacity(0.08),
+              ),
+            ),
+          ),
+          height: MediaQuery.of(context).size.height * 0.25,
+          width: double.infinity,
           child: Image.asset(
             'assets/icons/course2.png',
+            fit: BoxFit.fill,
           ),
         ),
         Positioned(

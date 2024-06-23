@@ -6,7 +6,6 @@ import 'package:info_app/core/shared/components/providers.dart';
 import 'package:info_app/core/shared/datasources/local/cache_helper.dart';
 import 'package:info_app/features/first_run_screen/first_run_screen.dart';
 import 'package:info_app/features/home/presentation/pages/menu.dart';
-import 'package:info_app/features/login_screen/presentation/pages/login_page.dart';
 import 'package:info_app/locator.dart';
 
 void main() async {
@@ -41,7 +40,6 @@ class MyApp extends StatelessWidget {
         debugShowCheckedModeBanner: false,
         theme: ThemeData(fontFamily: 'SuisseIntl'),
         home: isLoggedIn ? const Menu() : const FirstScreen(),
-        // home: LoginPage(),
       ),
     );
   }

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:info_app/features/courses/course_state_enum.dart';
-import 'package:info_app/features/courses/widgets/new_course_widget.dart';
+import 'package:info_app/features/courses/presentation/widgets/new_course_widget.dart';
 import 'package:info_app/features/home/domain/entities/course_entity.dart';
 
 class BookmarkedCoursesPage extends StatelessWidget {
@@ -45,9 +45,9 @@ class BookmarkedCoursesPage extends StatelessWidget {
                 padding: const EdgeInsets.only(left: 16),
                 child: Column(
                   children: [
-                    Align(
+                    const Align(
                       alignment: Alignment.centerLeft,
-                      child: const Text(
+                      child: Text(
                         'Избранные курсы',
                         style: TextStyle(
                           fontWeight: FontWeight.w500,
@@ -78,9 +78,9 @@ class BookmarkedCoursesPage extends StatelessWidget {
                 shrinkWrap: true,
                 itemBuilder: (context, index) {
                   return Padding(
-                      padding: EdgeInsets.only(bottom: 10),
+                      padding: const EdgeInsets.only(bottom: 10),
                       child: NewCourseWidget(
-                        courseEntity: CourseEntity() ,
+                        courseEntity: CourseEntity(),
                         isHistory: true,
                         courseStateEnum: CourseStateEnum.VIEWED,
                         isBookmark: true,

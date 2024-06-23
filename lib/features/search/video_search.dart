@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:info_app/features/courses/widgets/course_series_item.dart';
+import 'package:info_app/features/courses/presentation/widgets/course_series_item.dart';
 import 'package:info_app/features/courses/course_state_enum.dart';
 
 class VideoSearch extends StatelessWidget {
