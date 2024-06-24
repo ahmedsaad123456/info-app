@@ -8,7 +8,6 @@ import 'package:info_app/features/login_screen/presentation/cubit/auth_state.dar
 import 'package:info_app/features/login_screen/presentation/pages/code_screen.dart';
 import 'package:info_app/widget/custom_button.dart';
 import 'package:info_app/widget/custom_textfiled.dart';
-import 'package:url_launcher/url_launcher.dart';
 
 class LoginPage extends StatelessWidget {
   LoginPage({super.key});
@@ -153,7 +152,7 @@ class LoginPage extends StatelessWidget {
                                   //add on tap
                                   recognizer: TapGestureRecognizer()
                                     ..onTap = () async {
-                                      await launch(PUBLIC);
+                                      openUrl(context);
                                     }),
                             ],
                           ),

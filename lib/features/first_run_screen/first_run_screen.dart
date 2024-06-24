@@ -1,5 +1,7 @@
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:info_app/core/constants.dart';
 import 'package:info_app/features/courses/course_state_enum.dart';
 import 'package:info_app/features/courses/presentation/pages/courses_page.dart';
 import 'package:info_app/features/login_screen/presentation/pages/login_page.dart';
@@ -99,14 +101,17 @@ class _FirstScreenState extends State<FirstScreen> {
                             fontSize: 14,
                             color: Colors.white.withOpacity(0.6),
                             letterSpacing: -0.42),
-                        children: const [
-                          TextSpan(
+                        children: [
+                          const TextSpan(
                               text:
                                   'Нажимая на кнопку «Продолжить», Вы соглашаетесь с '),
                           TextSpan(
-                            text: 'Политикой конфиденциальности',
-                            style: TextStyle(color: Colors.white),
-                          ),
+                              text: 'Политикой конфиденциальности',
+                              style: const TextStyle(color: Colors.white),
+                              recognizer: TapGestureRecognizer()
+                                ..onTap = () async {
+                                  openUrl(context);
+                                }),
                         ],
                       ),
                     )
