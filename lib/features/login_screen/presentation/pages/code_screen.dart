@@ -7,7 +7,6 @@ import 'package:info_app/features/home/presentation/pages/menu.dart';
 import 'package:info_app/features/login_screen/presentation/cubit/auth_cubit.dart';
 import 'package:info_app/features/login_screen/presentation/cubit/auth_state.dart';
 import 'package:info_app/features/login_screen/presentation/widgets/pinput_widget.dart';
-import 'package:url_launcher/url_launcher.dart';
 
 import '../../../../widget/custom_button.dart';
 
@@ -136,7 +135,7 @@ class CodeScreen extends StatelessWidget {
                                   style: const TextStyle(color: Colors.white),
                                   recognizer: TapGestureRecognizer()
                                     ..onTap = () async {
-                                      await launch(PUBLIC);
+                                      openUrl(context);
                                     }),
                             ],
                           ),
