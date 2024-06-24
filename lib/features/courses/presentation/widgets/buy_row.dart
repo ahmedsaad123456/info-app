@@ -9,7 +9,10 @@ class BuyRow extends StatelessWidget {
   Widget build(BuildContext context) {
     return Row(
       children: [
-        SvgPicture.asset('assets/icons/lock.svg', color:Color(0xFFF8206E) ,),
+        SvgPicture.asset(
+          'assets/icons/lock.svg',
+          color: const Color(0xFFF8206E),
+        ),
         const SizedBox(
           width: 5,
         ),

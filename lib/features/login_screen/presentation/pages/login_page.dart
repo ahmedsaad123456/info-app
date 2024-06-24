@@ -1,17 +1,19 @@
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:info_app/core/constants.dart';
 import 'package:info_app/features/login_screen/presentation/cubit/auth_cubit.dart';
 import 'package:info_app/features/login_screen/presentation/cubit/auth_state.dart';
 import 'package:info_app/features/login_screen/presentation/pages/code_screen.dart';
 import 'package:info_app/widget/custom_button.dart';
 import 'package:info_app/widget/custom_textfiled.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class LoginPage extends StatelessWidget {
   LoginPage({super.key});
 
-   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
-
+  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
   @override
   Widget build(BuildContext context) {
@@ -21,7 +23,7 @@ class LoginPage extends StatelessWidget {
           image: DecorationImage(
               fit: BoxFit.cover, image: AssetImage('assets/icons/shape4.png'))),
       child: Scaffold(
-            backgroundColor:  Colors.transparent,
+        backgroundColor: Colors.transparent,
         body: SafeArea(
           child: SingleChildScrollView(
             child: Padding(
@@ -109,7 +111,7 @@ class LoginPage extends StatelessWidget {
                         const SizedBox(
                           height: 16,
                         ),
-                        authCubit.isDisabled 
+                        authCubit.isDisabled
                             ? ButtonWidget(
                                 text: 'Получить код',
                                 width: 350,
@@ -121,11 +123,12 @@ class LoginPage extends StatelessWidget {
                                 text: 'Получить код',
                                 height: 52,
                                 width: 350,
-                                color: Color.fromRGBO(248, 32, 110, 1),
+                                color: const Color.fromRGBO(248, 32, 110, 1),
                                 textColor: Colors.white,
                                 onTap: () {
                                   if (_formKey.currentState != null &&
-                                      _formKey.currentState!.validate() && !authCubit.isDisabled) {
+                                      _formKey.currentState!.validate() &&
+                                      !authCubit.isDisabled) {
                                     authCubit.login();
                                   }
                                 },
@@ -140,14 +143,18 @@ class LoginPage extends StatelessWidget {
                                 fontSize: 14,
                                 color: Colors.white.withOpacity(0.6),
                                 letterSpacing: -0.42),
-                            children: const [
-                              TextSpan(
+                            children: [
+                              const TextSpan(
                                   text:
                                       'Нажимая на кнопку «Продолжить», Вы соглашаетесь с '),
                               TextSpan(
-                                text: 'Политикой конфиденциальности',
-                                style: TextStyle(color: Colors.white),
-                              ),
+                                  text: 'Политикой конфиденциальности',
+                                  style: const TextStyle(color: Colors.white),
+                                  //add on tap
+                                  recognizer: TapGestureRecognizer()
+                                    ..onTap = () async {
+                                      await launch(PUBLIC);
+                                    }),
                             ],
                           ),
                         )

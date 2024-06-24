@@ -1,11 +1,13 @@
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:info_app/core/constants.dart';
 import 'package:info_app/features/home/presentation/pages/menu.dart';
 import 'package:info_app/features/login_screen/presentation/cubit/auth_cubit.dart';
 import 'package:info_app/features/login_screen/presentation/cubit/auth_state.dart';
 import 'package:info_app/features/login_screen/presentation/widgets/pinput_widget.dart';
-
+import 'package:url_launcher/url_launcher.dart';
 
 import '../../../../widget/custom_button.dart';
 
@@ -28,11 +30,11 @@ class CodeScreen extends StatelessWidget {
             child: SafeArea(
               child: BlocConsumer<AuthCubit, AuthState>(
                 listener: (context, state) {
-                   if (state is CodeSuccessState) {
+                  if (state is CodeSuccessState) {
                     Navigator.push(
                       context,
                       MaterialPageRoute<void>(
-                        builder: (BuildContext context) => Menu(),
+                        builder: (BuildContext context) => const Menu(),
                       ),
                     );
                   }
@@ -113,7 +115,6 @@ class CodeScreen extends StatelessWidget {
                                 textColor: Colors.white,
                                 onTap: () {
                                   authCubit.confirmCode();
-                          
                                 },
                               ),
                         const SizedBox(
@@ -126,14 +127,17 @@ class CodeScreen extends StatelessWidget {
                                 fontSize: 14,
                                 color: Colors.white.withOpacity(0.6),
                                 letterSpacing: -0.42),
-                            children: const [
-                              TextSpan(
+                            children: [
+                              const TextSpan(
                                   text:
                                       'Нажимая на кнопку «Продолжить», Вы соглашаетесь с '),
                               TextSpan(
-                                text: 'Политикой конфиденциальности',
-                                style: TextStyle(color: Colors.white),
-                              ),
+                                  text: 'Политикой конфиденциальности',
+                                  style: const TextStyle(color: Colors.white),
+                                  recognizer: TapGestureRecognizer()
+                                    ..onTap = () async {
+                                      await launch(PUBLIC);
+                                    }),
                             ],
                           ),
                         )

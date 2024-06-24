@@ -36,7 +36,10 @@ class SelectedWidget extends StatelessWidget {
           height: 12,
         ),
         CustomContainer(
-          icon: SvgPicture.asset('assets/icons/credit_card.svg'),
+          icon: const Icon(
+            Icons.credit_card,
+            color: Colors.white,
+          ),
           title: 'Подписки',
           onTap: () {
             Navigator.push(
@@ -48,7 +51,10 @@ class SelectedWidget extends StatelessWidget {
           },
         ),
         CustomContainer(
-          icon: SvgPicture.asset('assets/icons/bookmark.svg'),
+          icon: const Icon(
+            Icons.bookmark_border,
+            color: Colors.white,
+          ),
           title: 'Избранные курсы',
           onTap: () {
             Navigator.push(
@@ -61,7 +67,10 @@ class SelectedWidget extends StatelessWidget {
           },
         ),
         CustomContainer(
-          icon: SvgPicture.asset('assets/icons/device_reset.svg'),
+          icon: const Icon(
+            Icons.history,
+            color: Colors.white,
+          ),
           title: 'История просмотра',
           onTap: () {
             Navigator.push(
