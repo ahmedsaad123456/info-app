@@ -55,7 +55,6 @@ dependencies:
   image_network: ^2.5.6
   image_picker_for_web: ^3.0.4
   image_picker_web: ^4.0.0
-  url_launcher:
 
 
 
