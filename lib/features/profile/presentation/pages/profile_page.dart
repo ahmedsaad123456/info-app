@@ -32,8 +32,7 @@ class ProfilePage extends StatelessWidget {
         }
       },
       builder: (context, state) {
-        CodeModel model = ProfileCubit.get(context).codeModel!;
-        print("$BASE_URL/avatars/${model.account!.avatar!}");
+        CodeModel? model = ProfileCubit.get(context).codeModel;
         return Column(
           children: [
             const SizedBox(
@@ -51,21 +50,24 @@ class ProfilePage extends StatelessWidget {
             const SizedBox(
               height: 32,
             ),
-            RichText(
-              textAlign: TextAlign.center,
-              text: TextSpan(
-                style: const TextStyle(
-                    fontSize: 24,
-                    color: Colors.white,
-                    fontWeight: FontWeight.w500,
-                    fontFamily: 'SuisseIntl'),
-                children: [
-                  TextSpan(
-                    text: model.account?.name ?? '',
-                    style: const TextStyle(color: Color(0xFFF8206E)),
-                  ),
-                  const TextSpan(text: ', доброе утро! '),
-                ],
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 16),
+              child: RichText(
+                textAlign: TextAlign.center,
+                text: TextSpan(
+                  style: const TextStyle(
+                      fontSize: 24,
+                      color: Colors.white,
+                      fontWeight: FontWeight.w500,
+                      fontFamily: 'SuisseIntl'),
+                  children: [
+                    TextSpan(
+                      text: model?.account?.name ?? '',
+                      style: const TextStyle(color: Color(0xFFF8206E)),
+                    ),
+                    const TextSpan(text: ', доброе утро! '),
+                  ],
+                ),
               ),
             ),
             const SizedBox(
@@ -75,10 +77,10 @@ class ProfilePage extends StatelessWidget {
               onTap: () {
                 profileCubit.pickImage();
               },
-              child: model.account?.avatar != null
+              child: model?.account?.avatar != null
                   ? ClipOval(
                       child: Image.network(
-                        "$BASE_URL_AVATAR${model.account!.avatar!}",
+                        "$BASE_URL_AVATAR${model!.account!.avatar!}",
                         fit: BoxFit.fill,
                         height: 100,
                         width: 100,
@@ -90,53 +92,61 @@ class ProfilePage extends StatelessWidget {
             const SizedBox(
               height: 24,
             ),
-            CustomTextField(
-              inputFormatters: [maskFormatter],
-              onChanged: (v) {
-                if (!v.startsWith('+7')) {
-                  profileCubit.phoneController.text =
-                      '+7${v.replaceAll('+7', '')}';
-                  profileCubit.phoneController.selection =
-                      TextSelection.fromPosition(
-                    TextPosition(
-                        offset: profileCubit.phoneController.text.length),
-                  );
-                }
-              },
-              controller: profileCubit.phoneController,
-              keyboardType: TextInputType.phone,
-              validator: (v) {
-                if (v!.isEmpty) {
-                  return "error";
-                }
-                return null;
-              },
-              textHint: '+7 (909)-999-99-99',
-              iconData: SvgPicture.asset('assets/icons/phone.svg'),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 16),
+              child: Column(
+                children: [
+                  CustomTextField(
+                    inputFormatters: [maskFormatter],
+                    onChanged: (v) {
+                      if (!v.startsWith('+7')) {
+                        profileCubit.phoneController.text =
+                            '+7${v.replaceAll('+7', '')}';
+                        profileCubit.phoneController.selection =
+                            TextSelection.fromPosition(
+                          TextPosition(
+                              offset: profileCubit.phoneController.text.length),
+                        );
+                      }
+                    },
+                    controller: profileCubit.phoneController,
+                    keyboardType: TextInputType.phone,
+                    validator: (v) {
+                      if (v!.isEmpty) {
+                        return "error";
+                      }
+                      return null;
+                    },
+                    textHint: '+7 (909)-999-99-99',
+                    iconData: SvgPicture.asset('assets/icons/phone.svg'),
+                  ),
+                  const SizedBox(
+                    height: 10,
+                  ),
+                  CustomTextField(
+                    controller: profileCubit.emailController,
+                    keyboardType: TextInputType.emailAddress,
+                    textHint: 'email@mail.ru',
+                    iconData: SvgPicture.asset('assets/icons/email.svg'),
+                  ),
+                  const SizedBox(
+                    height: 16,
+                  ),
+                  ButtonWidget(
+                    text: 'Редактировать',
+                    height: 52,
+                    color: Colors.white.withOpacity(0.12),
+                    textColor: Colors.white.withOpacity(0.84),
+                    boxBorder: Border.all(
+                        width: 1, color: Colors.white.withOpacity(0.08)),
+                    onTap: () {
+                      profileCubit.updateProfile();
+                    },
+                  ),
+                ],
+              ),
             ),
-            const SizedBox(
-              height: 10,
-            ),
-            CustomTextField(
-              controller: profileCubit.emailController,
-              keyboardType: TextInputType.emailAddress,
-              textHint: 'email@mail.ru',
-              iconData: SvgPicture.asset('assets/icons/email.svg'),
-            ),
-            const SizedBox(
-              height: 16,
-            ),
-            ButtonWidget(
-              text: 'Редактировать',
-              height: 52,
-              color: Colors.white.withOpacity(0.12),
-              textColor: Colors.white.withOpacity(0.84),
-              boxBorder:
-                  Border.all(width: 1, color: Colors.white.withOpacity(0.08)),
-              onTap: () {
-                profileCubit.updateProfile();
-              },
-            ),
+
             const SizedBox(
               height: 32,
             ),
@@ -177,6 +187,9 @@ class ProfilePage extends StatelessWidget {
                     fontSize: 16,
                     color: Colors.white.withOpacity(0.64),
                     fontWeight: FontWeight.w400)),
+            const SizedBox(
+              height: 32,
+            ),
           ],
         );
       },

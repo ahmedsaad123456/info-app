@@ -18,30 +18,26 @@ class Menu extends StatelessWidget {
           backgroundColor: Colors.black,
           body: SafeArea(
             child: SingleChildScrollView(
-              child: Padding(
-                  padding: const EdgeInsets.symmetric(vertical: 32, horizontal: 20),
-                  child: cubit.screens[cubit.index]),
+              child: cubit.screens[cubit.index],
             ),
           ),
-         bottomNavigationBar: Container(
-           height: 72,
-           decoration: BoxDecoration(
-             border: Border(
-               top: BorderSide(
-                 width: 1.0,
-                 color: Colors.white.withOpacity(0.18),
-               ),
-             ),
-           ),
-           
-           child: BottomNavigationBar(
-            
-             backgroundColor: Colors.white.withOpacity(0.18),
-             currentIndex: cubit.index,
-             onTap: (index) {
-               cubit.changeIndex(index, context);
-             },
-             items:  [
+          bottomNavigationBar: Container(
+            height: 90,
+            decoration: BoxDecoration(
+              border: Border(
+                top: BorderSide(
+                  width: 1.0,
+                  color: Colors.white.withOpacity(0.18),
+                ),
+              ),
+            ),
+            child: BottomNavigationBar(
+              backgroundColor: Colors.white.withOpacity(0.18),
+              currentIndex: cubit.index,
+              onTap: (index) {
+                cubit.changeIndex(index, context);
+              },
+              items: [
                 BottomNavigationBarItem(
                   icon: Padding(
                     padding: const EdgeInsets.only(bottom: 5),
@@ -73,14 +69,14 @@ class Menu extends StatelessWidget {
                   label: 'Профиль',
                 ),
               ],
-             selectedIconTheme: const IconThemeData(color: Color(0xFFF8206E)),
-             selectedItemColor: const Color(0xFFF8206E),
-             selectedFontSize: 12,
-             unselectedIconTheme: const IconThemeData(color: Colors.white),
-             unselectedItemColor: Colors.white.withOpacity(0.64),
-             unselectedFontSize: 12,
-           ),
-         ),
+              selectedIconTheme: const IconThemeData(color: Color(0xFFF8206E)),
+              selectedItemColor: const Color(0xFFF8206E),
+              selectedFontSize: 12,
+              unselectedIconTheme: const IconThemeData(color: Colors.white),
+              unselectedItemColor: Colors.white.withOpacity(0.64),
+              unselectedFontSize: 12,
+            ),
+          ),
         );
       },
     );

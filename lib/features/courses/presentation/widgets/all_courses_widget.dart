@@ -36,7 +36,6 @@ class AllCoursesWidget extends StatelessWidget {
                     courseEntity:
                         homeCouit.courseModel?[index] ?? CourseEntity(),
                     courseStateEnum: CourseStateEnum.PURCHASED,
-                    isBookmark: false,
                     isHistory: false,
                     title: 'Просмотрено',
                   ),

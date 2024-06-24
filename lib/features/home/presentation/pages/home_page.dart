@@ -17,13 +17,9 @@ class HomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocConsumer<HomeCubit, HomeStates>(
-      listener: (context, state) {
-        // TODO: implement listener
-      },
+      listener: (context, state) {},
       builder: (context, state) {
-        HomeCubit.get(context).getCourses();
         final homeCubit = HomeCubit.get(context);
-
         return homeCubit.courseModel != null
             ? Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -41,101 +37,120 @@ class HomePage extends StatelessWidget {
                     padding: EdgeInsets.symmetric(vertical: 32),
                     child: StoryListView(),
                   ),
-                  Image.asset('assets/icons/home3.png'),
-                  const SizedBox(
-                    height: 32,
-                  ),
-                  Text(
-                    textAlign: TextAlign.center,
-                    'Более 500 тысяч человек смогли изменить свою жизнь через работу с подсознанием по уникальной методике Инны ТИ. Благодаря работе с подсознанием, можно быстро и легко изменить все сферы жизни. На платформе вы найдёте более 100 методик. Подписка открывает доступ к огромной базе курсов, семинаров и тренажёров для работы с подсознанием',
-                    style: TextStyle(
-                        fontWeight: FontWeight.w400,
-                        fontSize: 16,
-                        color: Colors.white.withOpacity(0.64)),
-                  ),
-                  const SizedBox(
-                    height: 10,
-                  ),
-                  const Center(
-                    child: ButtonWidget(
-                        text: 'Оформить подписку',
-                        height: 52,
-                        width: 350,
-                        color: Color(0xFFF8206E),
-                        textColor: Colors.white),
+                  Image.asset(
+                    'assets/icons/home3.png',
+                    width: double.infinity,
+                    fit: BoxFit.fitWidth,
                   ),
                   const SizedBox(
                     height: 32,
                   ),
-                  const BrowseWidget(),
-                  const SizedBox(
-                    height: 32,
-                  ),
-                  CoursesListView(
-                    type: 1,
-                    courses: homeCubit.demoCourses,
-                    title: 'Демо курсы',
-                    subtitle:
-                        'Авторские курсы, которые доступны всем пользователям нашего приложения',
-                    courseStateEnum: CourseStateEnum.PURCHASED,
-                  ),
-                  const SizedBox(
-                    height: 32,
-                  ),
-                  CoursesListView(
-                    type: 2,
-                    courses: homeCubit.neroCourses,
-                    title: 'Подписка Нейро',
-                    subtitle:
-                        'Авторские курсы, которые доступны только по подписке Нейро и выше',
-                    courseStateEnum: CourseStateEnum.NOT_PURCHASED,
-                    isNotPlus: true,
-                  ),
-                  const SizedBox(
-                    height: 32,
-                  ),
-                  CoursesListView(
-                      type: 3,
-                      courses: homeCubit.neroPlusCourses,
-                      title: 'Подписка Нейро+',
-                      subtitle:
-                          'Авторские курсы, которые доступны только по подписке Нейро+',
-                      courseStateEnum: CourseStateEnum.NOT_PURCHASED),
-                  const SizedBox(
-                    height: 32,
-                  ),
-                  const CourseOwnerWidget(),
-                  const SizedBox(
-                    height: 32,
-                  ),
-                  const Align(
-                    alignment: AlignmentDirectional.bottomStart,
-                    child: Text(
-                      'Курсы по категориям',
-                      style: TextStyle(
-                          color: Colors.white,
-                          fontSize: 28,
-                          fontWeight: FontWeight.w500),
-                    ),
-                  ),
-                  const SizedBox(
-                    height: 15,
-                  ),
-                  ...homeCubit.categoryCourseMap.entries.map((entry) {
-                    return Column(
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 16),
+                    child: Column(
                       children: [
-                        CourseByCategory(
-                          title: entry.key,
-                          courses: entry.value,
-                          courseStateEnum: CourseStateEnum.VIEWED,
-                          isBookmark: true,
+                        Text(
+                          textAlign: TextAlign.center,
+                          'Более 500 тысяч человек смогли изменить свою жизнь через работу с подсознанием по уникальной методике Инны ТИ. Благодаря работе с подсознанием, можно быстро и легко изменить все сферы жизни. На платформе вы найдёте более 100 методик. Подписка открывает доступ к огромной базе курсов, семинаров и тренажёров для работы с подсознанием',
+                          style: TextStyle(
+                              fontWeight: FontWeight.w400,
+                              fontSize: 16,
+                              color: Colors.white.withOpacity(0.64)),
                         ),
                         const SizedBox(
                           height: 15,
                         ),
+                        Center(
+                          child: ButtonWidget(
+                              text: 'Оформить подписку',
+                              height: 52,
+                              width: MediaQuery.sizeOf(context).width * 0.9,
+                              color: const Color(0xFFF8206E),
+                              textColor: Colors.white),
+                        ),
+                        const SizedBox(
+                          height: 32,
+                        ),
                       ],
-                    );
-                  }),
+                    ),
+                  ),
+                  const BrowseWidget(),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 16),
+                    child: Column(
+                      children: [
+                        const SizedBox(
+                          height: 32,
+                        ),
+                        CoursesListView(
+                          type: 1,
+                          courses: homeCubit.demoCourses,
+                          title: 'Демо курсы',
+                          subtitle:
+                              'Авторские курсы, которые доступны всем пользователям нашего приложения',
+                          courseStateEnum: CourseStateEnum.PURCHASED,
+                        ),
+                        const SizedBox(
+                          height: 32,
+                        ),
+                        CoursesListView(
+                          type: 2,
+                          courses: homeCubit.neroCourses,
+                          title: 'Подписка Нейро',
+                          subtitle:
+                              'Авторские курсы, которые доступны только по подписке Нейро и выше',
+                          courseStateEnum: CourseStateEnum.NOT_PURCHASED,
+                          isNotPlus: true,
+                        ),
+                        const SizedBox(
+                          height: 32,
+                        ),
+                        CoursesListView(
+                            type: 3,
+                            courses: homeCubit.neroPlusCourses,
+                            title: 'Подписка Нейро+',
+                            subtitle:
+                                'Авторские курсы, которые доступны только по подписке Нейро+',
+                            courseStateEnum: CourseStateEnum.NOT_PURCHASED),
+                        const SizedBox(
+                          height: 32,
+                        ),
+                        const CourseOwnerWidget(),
+                        const SizedBox(
+                          height: 32,
+                        ),
+                        const Align(
+                          alignment: AlignmentDirectional.bottomStart,
+                          child: Text(
+                            'Курсы по категориям',
+                            style: TextStyle(
+                                color: Colors.white,
+                                fontSize: 28,
+                                fontWeight: FontWeight.w500),
+                          ),
+                        ),
+                        const SizedBox(
+                          height: 15,
+                        ),
+                        ...homeCubit.categoryCourseMap.entries.map((entry) {
+                          return Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              CourseByCategory(
+                                title: entry.key,
+                                courses: entry.value,
+                                courseStateEnum: CourseStateEnum.VIEWED,
+                                isBookmark: true,
+                              ),
+                              const SizedBox(
+                                height: 15,
+                              ),
+                            ],
+                          );
+                        }),
+                      ],
+                    ),
+                  ),
                 ],
               )
             : const Center(

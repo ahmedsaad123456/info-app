@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:info_app/features/search/presentation/cubit/search_cubit.dart';
 
 class SearchInput extends StatelessWidget {
   const SearchInput({super.key});
@@ -6,6 +7,15 @@ class SearchInput extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return TextFormField(
+      controller: SearchCubit.get(context).controller,
+      style: const TextStyle(
+        fontWeight: FontWeight.w400,
+        color: Colors.white,
+        fontSize: 20,
+      ),
+      onChanged: (val) {
+        SearchCubit.get(context).search(context, val);
+      },
       decoration: InputDecoration(
         hintText: 'Поиск',
         hintStyle: TextStyle(

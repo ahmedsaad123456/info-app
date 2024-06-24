@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:info_app/features/courses/presentation/widgets/course_series_item.dart';
 import 'package:info_app/features/courses/course_state_enum.dart';
+import 'package:info_app/features/courses/presentation/widgets/course_series_item.dart';
 import 'package:info_app/features/courses/presentation/widgets/new_course_widget.dart';
 import 'package:info_app/features/home/domain/entities/course_entity.dart';
 import 'package:info_app/features/home/domain/entities/material_entity.dart';
@@ -122,7 +122,7 @@ class HistoryCoursesPage extends StatelessWidget {
                               height: 200,
                               child: NewCourseWidget(
                                 courseEntity: courses[index],
-                                isHistory: false,
+                                isHistory: true,
                                 courseStateEnum: CourseStateEnum.VIEWED,
                                 title: 'Просмотрено',
                               ),

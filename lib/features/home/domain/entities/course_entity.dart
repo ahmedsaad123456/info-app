@@ -1,3 +1,5 @@
+import 'package:info_app/features/home/domain/entities/material_entity.dart';
+
 class CourseEntity {
   int? id;
   String? name;
@@ -7,8 +9,9 @@ class CourseEntity {
   dynamic preview;
   double? price;
   int? accessLevel;
+  bool? isFavorite;
   dynamic content;
-
+  final List<MaterialEntity>? materials;
   CourseEntity({
     this.id,
     this.name,
@@ -18,7 +21,9 @@ class CourseEntity {
     this.preview,
     this.price,
     this.accessLevel,
+    this.isFavorite,
     this.content,
+    this.materials,
   });
 }
 

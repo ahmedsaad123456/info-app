@@ -1,3 +1,4 @@
+import 'package:info_app/features/home/domain/entities/request_favorites_entity.dart';
 import 'package:info_app/features/login_screen/data/models/code_model.dart';
 
 class CodeEntity {
@@ -14,7 +15,7 @@ class AccountEntity {
   String? name;
   String? email;
   String? avatar;
-  dynamic favorites;
+  RequestFavoritesEntity? favorites;
   int? isAdmin;
 
 

@@ -3,7 +3,7 @@ import 'package:flutter_svg/svg.dart';
 import 'package:info_app/features/profile/presentation/pages/about_page.dart';
 import 'package:info_app/features/profile/presentation/pages/bookmarked_courses_page.dart';
 import 'package:info_app/features/profile/presentation/widgets/custom_container.dart';
-import 'package:info_app/features/profile/presentation/widgets/history_courses_page.dart';
+import 'package:info_app/features/profile/presentation/pages/history_courses_page.dart';
 import 'package:info_app/features/subscription/subscripe_page.dart';
 
 class SelectedWidget extends StatelessWidget {
@@ -32,17 +32,17 @@ class SelectedWidget extends StatelessWidget {
                 color: Colors.white.withOpacity(0.64)),
           ),
         ),
-        SizedBox(
+        const SizedBox(
           height: 12,
         ),
         CustomContainer(
           icon: SvgPicture.asset('assets/icons/credit_card.svg'),
           title: 'Подписки',
           onTap: () {
-              Navigator.push(
+            Navigator.push(
               context,
               MaterialPageRoute<void>(
-                builder: (BuildContext context) => SubscribeScreen(),
+                builder: (BuildContext context) => const SubscribeScreen(),
               ),
             );
           },
@@ -54,7 +54,8 @@ class SelectedWidget extends StatelessWidget {
             Navigator.push(
               context,
               MaterialPageRoute<void>(
-                builder: (BuildContext context) => BookmarkedCoursesPage(),
+                builder: (BuildContext context) =>
+                    const BookmarkedCoursesPage(),
               ),
             );
           },
@@ -66,7 +67,7 @@ class SelectedWidget extends StatelessWidget {
             Navigator.push(
               context,
               MaterialPageRoute<void>(
-                builder: (BuildContext context) => HistoryCoursesPage(),
+                builder: (BuildContext context) => const HistoryCoursesPage(),
               ),
             );
           },
@@ -78,7 +79,7 @@ class SelectedWidget extends StatelessWidget {
             Navigator.push(
               context,
               MaterialPageRoute<void>(
-                builder: (BuildContext context) => AboutPage(),
+                builder: (BuildContext context) => const AboutPage(),
               ),
             );
           },

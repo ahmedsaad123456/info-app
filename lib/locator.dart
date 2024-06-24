@@ -21,6 +21,11 @@ import 'package:info_app/features/profile/data/repositories/profile_impl_reposit
 import 'package:info_app/features/profile/domain/repositories/profile_repository.dart';
 import 'package:info_app/features/profile/domain/usecases/profile_usecase.dart';
 import 'package:info_app/features/profile/presentation/cubit/profile_cubit.dart';
+import 'package:info_app/features/search/data/datasources/api_service_search.dart';
+import 'package:info_app/features/search/data/repositories/search_impl_repository.dart';
+import 'package:info_app/features/search/domain/repositories/search_repository.dart';
+import 'package:info_app/features/search/domain/usecases/search_usecasae.dart';
+import 'package:info_app/features/search/presentation/cubit/search_cubit.dart';
 import 'package:internet_connection_checker/internet_connection_checker.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -29,16 +34,17 @@ GetIt locator = GetIt.instance;
 Future<void> setupLocator() async {
   //BLOC
   locator.registerFactory(() => AuthCubit(locator()));
-  locator.registerFactory(() => HomeCubit(locator()));
+  locator.registerFactory(() => HomeCubit(locator())..getCourses());
   locator.registerFactory(() => ProfileCubit(locator()));
+  locator.registerFactory(() => SearchCubit(locator()));
   locator.registerLazySingleton(() => CourseCubit(locator()));
 
   // //USECASES
   locator.registerLazySingleton(() => AuthUseCase(locator()));
   locator.registerLazySingleton(() => ProfileUsecase(locator()));
   locator.registerLazySingleton(() => HomeUsecase(locator()));
+  locator.registerLazySingleton(() => SearchUsecasae(locator()));
   locator.registerLazySingleton(() => CourseUseCase(locator()));
-
   // //CORE
   // locator.registerLazySingleton(() => NetworkInfoImpl(locator()));
 
@@ -46,23 +52,27 @@ Future<void> setupLocator() async {
   locator.registerLazySingleton<AuthRepository>(
       () => AuthImplRepository(locator()));
 
-  locator.registerLazySingleton<CourseRepository>(
-      () => CourseImplRepository(locator()));
-
   locator.registerLazySingleton<ProfileRepository>(
     () => ProfileImplRepository(locator()),
   );
+  locator.registerLazySingleton<CourseRepository>(
+      () => CourseImplRepository(locator()));
 
   locator.registerLazySingleton<HomeRepository>(
     () => HomeImplRepository(locator()),
   );
+
+  locator.registerLazySingleton<SearchRepository>(
+    () => SearchImplRepository(locator()),
+  );
   // //DATASOURSE
   locator.registerLazySingleton(() => ApiServiceAuth());
-  locator.registerLazySingleton(() => ApiServiceCourse());
   locator.registerLazySingleton(
     () => ApiserviceProfile(),
   );
   locator.registerLazySingleton(() => ApiServiceHome());
+  locator.registerLazySingleton(() => ApiServiceSearch());
+  locator.registerLazySingleton(() => ApiServiceCourse());
 
   // //EXTRNAL
   locator.registerLazySingleton(() => SharedPreferences.getInstance());

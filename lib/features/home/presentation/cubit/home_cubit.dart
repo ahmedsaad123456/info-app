@@ -2,13 +2,17 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:info_app/core/shared/datasources/local/cache_helper.dart';
 import 'package:info_app/features/home/data/models/course_model.dart';
+import 'package:info_app/features/home/data/models/favorites_model.dart';
 import 'package:info_app/features/home/domain/entities/course_entity.dart';
+import 'package:info_app/features/home/domain/entities/request_favorites_entity.dart';
 import 'package:info_app/features/home/domain/usecases/home_usecase.dart';
 import 'package:info_app/features/home/presentation/cubit/home_satate.dart';
 import 'package:info_app/features/home/presentation/pages/home_page.dart';
+import 'package:info_app/features/login_screen/data/models/code_model.dart';
 import 'package:info_app/features/profile/presentation/cubit/profile_cubit.dart';
 import 'package:info_app/features/profile/presentation/pages/profile_page.dart';
-import 'package:info_app/features/search/search_page.dart';
+import 'package:info_app/features/search/presentation/cubit/search_cubit.dart';
+import 'package:info_app/features/search/presentation/pages/search_page.dart';
 
 class HomeCubit extends Cubit<HomeStates> {
   HomeCubit(this.homeUsecase) : super(HomeInitialState());
@@ -55,8 +59,10 @@ class HomeCubit extends Cubit<HomeStates> {
         (l) {
           emit(GetCoursesErrorState(error: l));
         },
-        (r) {
+        (r) async {
           courseModel = r.courses;
+          await getFavorites();
+          updateFavoritesInCourses();
           categorizeCourses();
           gatherCategories();
           createCategoryCourseMap();
@@ -65,6 +71,116 @@ class HomeCubit extends Cubit<HomeStates> {
       );
     }
   }
+
+  void updateFavoritesInCourses() {
+    if (responseFavoritesModel != null) {
+      final favoriteCourseIds = responseFavoritesModel!.favorites?.courses
+              ?.map((course) => course.id)
+              .toList() ??
+          [];
+      for (var course in courseModel!) {
+        course.isFavorite = favoriteCourseIds.contains(course.id);
+      }
+    }
+  }
+
+  ResponseFavoritesModel? responseFavoritesModel;
+  RequestFavoritesEntity? requestFavoritesEntity;
+
+  Future<void> getFavorites() async {
+    if (responseFavoritesModel == null) {
+      emit(GetFavoritesLoadingState());
+      final result = await homeUsecase.getFavorites();
+      result.fold(
+        (l) {
+          emit(GetFavoritesErrorState(error: l));
+        },
+        (r) {
+          responseFavoritesModel = r;
+            // Update the isFavorite attribute in the responseFavoritesModel list
+        if (responseFavoritesModel?.favorites?.courses != null) {
+          for (var course in responseFavoritesModel!.favorites!.courses!) {
+              course.isFavorite = true; // Set isFavorite to true by default
+            
+          }
+        }
+          updateRequestFavoritesEntity();
+          emit(GetFavoritesSuccessState());
+        },
+      );
+    }
+  }
+
+  void updateRequestFavoritesEntity() {
+    final favoriteCourseIds = responseFavoritesModel?.favorites?.courses
+            ?.map((course) => course.id)
+            .whereType<int>()
+            .toList() ??
+        [];
+    final favoriteMaterialIds = responseFavoritesModel?.favorites?.materials
+            ?.map((material) => material.id)
+            .whereType<int>()
+            .toList() ??
+        [];
+
+    requestFavoritesEntity = RequestFavoritesEntity(
+      courses: favoriteCourseIds,
+      materials: favoriteMaterialIds,
+    );
+  }
+
+  CodeModel? codeModel;
+  Future<void> setFavorites(int courseId, {bool isSearch = false, BuildContext? context}) async {
+    emit(SetFavoritesLoadingState());
+
+    // Toggle the favorite status locally in the main courseModel list
+    final courseIndex =
+        courseModel?.indexWhere((course) => course.id == courseId);
+    if (courseIndex != null && courseIndex != -1) {
+      courseModel![courseIndex].isFavorite =
+          !courseModel![courseIndex].isFavorite!;
+    }
+
+    if (isSearch && context != null) {
+          SearchCubit.get(context).updateFavoriteStatus(courseId);
+        }
+
+
+    // Update the requestFavoritesEntity and responseFavoritesModel
+    if (requestFavoritesEntity != null) {
+      if (requestFavoritesEntity!.courses!.contains(courseId)) {
+        requestFavoritesEntity!.courses!.remove(courseId);
+        responseFavoritesModel?.favorites?.courses
+            ?.removeWhere((course) => course.id == courseId);
+      } else {
+        requestFavoritesEntity!.courses!.add(courseId);
+        final courseToAdd =
+            courseModel?.firstWhere((course) => course.id == courseId);
+        if (courseToAdd != null) {
+          responseFavoritesModel?.favorites?.courses?.add(courseToAdd);
+        }
+      }
+    } else {
+      requestFavoritesEntity = RequestFavoritesEntity(
+        courses: [courseId],
+        materials: [],
+      );
+    }
+
+    print(requestFavoritesEntity!.courses);
+
+    final result = await homeUsecase.setFavorites(requestFavoritesEntity!);
+    result.fold(
+      (l) {
+        emit(SetFavoritesErrorState(error: l));
+      },
+      (r) {
+        codeModel = r;
+        emit(SetFavoritesSuccessState());
+      },
+    );
+  }
+
 
   List<String> selectedDemoCategories = [];
   List<String> selectedNeroCategories = [];

@@ -22,10 +22,8 @@ class CoursesPage extends StatelessWidget {
         child: BlocBuilder<CourseCubit, CourseState>(
           builder: (context, state) {
             if (state is CourseLoaded) {
-              print(state.courseResponseModel);
-
               var course = state.courseResponseModel;
-              print(course.courseModel?.category ?? "");
+              print("vvvvv${course.courseModel?.materials}");
               return Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 16.0),
                 child: SingleChildScrollView(
@@ -61,7 +59,6 @@ class CoursesPage extends StatelessWidget {
                           courseEntity: course.courseModel ?? CourseEntity(),
                           isHistory: true,
                           courseStateEnum: courseStateEnum,
-                          isBookmark: false,
                           isNotPlus: false,
                           title: 'Просмотрено',
                         ),
@@ -91,7 +88,9 @@ class CoursesPage extends StatelessWidget {
                           subtitle: course.courseModel?.description ?? "",
                         ),
                       ),
-                      const CourseSeriesWidget(),
+                      CourseSeriesWidget(
+                        materialEntity: course.courseModel?.materials ?? [],
+                      ),
                       const SizedBox(
                         height: 16,
                       ),

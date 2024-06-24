@@ -1,3 +1,4 @@
+import 'package:info_app/features/home/data/models/material_model.dart';
 import 'package:info_app/features/home/domain/entities/course_entity.dart';
 
 class CourseModel extends CourseEntity {
@@ -11,18 +12,26 @@ class CourseModel extends CourseEntity {
     super.price,
     super.accessLevel,
     super.content,
+    super.materials,
   });
 
-  CourseModel.fromJson(Map<String, dynamic> json) {
-    id = json['id'];
-    name = json['name'];
-    category = json['category'];
-    type = json['type'];
-    description = json['description'];
-    preview = json['preview'];
-    price = json['price'].toDouble();
-    accessLevel = json['access_level'];
-    content = json['content'];
+  factory CourseModel.fromJson(Map<String, dynamic> json) {
+    return CourseModel(
+      id: json['id'],
+      name: json['name'],
+      category: json['category'],
+      type: json['type'],
+      description: json['description'],
+      preview: json['preview'],
+      price: json['price'].toDouble(),
+      accessLevel: json['access_level'],
+      content: json['content'],
+      materials: json['materials'] != null
+          ? List.from(json['materials'])
+              .map((e) => MaterialModel.fromJson(e))
+              .toList()
+          : null,
+    );
   }
 
   Map<String, dynamic> toJson() {

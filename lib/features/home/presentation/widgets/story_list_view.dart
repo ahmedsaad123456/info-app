@@ -14,6 +14,7 @@ class StoryListView extends StatelessWidget {
         shrinkWrap: true,
         itemCount: 15,
         scrollDirection: Axis.horizontal,
+        padding: const EdgeInsets.only(left: 16),
         itemBuilder: (context, index) {
           return const Padding(
             padding: EdgeInsets.only(right: 8),

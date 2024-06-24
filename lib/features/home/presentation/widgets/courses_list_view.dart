@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:info_app/features/courses/course_state_enum.dart';
-import 'package:info_app/features/courses/presentation/cubit/course_cubit.dart';
-import 'package:info_app/features/courses/presentation/pages/courses_page.dart';
 import 'package:info_app/features/courses/presentation/widgets/new_course_widget.dart';
 import 'package:info_app/features/home/domain/entities/course_entity.dart';
 import 'package:info_app/features/home/presentation/widgets/filter_course_widget.dart';
@@ -45,7 +43,6 @@ class CoursesListView extends StatelessWidget {
                     courseEntity: course,
                     courseStateEnum: courseStateEnum,
                     isNotPlus: isNotPlus,
-                    isBookmark: false,
                     isHistory: false,
                   ));
             },
