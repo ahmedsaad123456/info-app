@@ -59,8 +59,7 @@ class ProfileCubit extends Cubit<ProfileState> {
         emit(ProfileUpdateErrorState(error: l));
       },
       (r) {
-        phoneController.clear();
-        emailController.clear();
+
         codeModel = r;
         codeModel!.token = token;
         _cacheHelper.saveUser(r);
