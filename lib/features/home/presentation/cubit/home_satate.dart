@@ -35,3 +35,11 @@ class SetFavoritesErrorState extends HomeStates {
 
 class SetFavoritesSuccessState extends HomeStates {}
 
+class GetHistoriesLoadingState extends HomeStates {}
+
+class GetHistoriesErrorState extends HomeStates {
+  final String error;
+  GetHistoriesErrorState({required this.error});
+}
+
+class GetHistoriesSuccessState extends HomeStates {}

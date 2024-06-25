@@ -34,7 +34,9 @@ GetIt locator = GetIt.instance;
 Future<void> setupLocator() async {
   //BLOC
   locator.registerFactory(() => AuthCubit(locator()));
-  locator.registerFactory(() => HomeCubit(locator())..getCourses());
+  locator.registerFactory(() => HomeCubit(locator())
+    ..getCourses()
+    ..getHistories());
   locator.registerFactory(() => ProfileCubit(locator()));
   locator.registerFactory(() => SearchCubit(locator()));
   locator.registerLazySingleton(() => CourseCubit(locator()));
