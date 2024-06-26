@@ -463,46 +463,58 @@ class HomeCubit extends Cubit<HomeStates> {
   }
 
 //================================================================================================================================
-  Future<void> setHistories(String key, int id) async {
-    emit(SetHistoriesLoadingState());
-    // Add the ID to the correct list based on the key
-    if (key == 'course_history') {
-      coursesHistoryId ??= [];
-      if (!coursesHistoryId!.contains(id)) {
-        coursesHistoryId!.add(id);
+ Future<void> setHistories(String key, int id) async {
+  emit(SetHistoriesLoadingState());
+
+  if (key == 'courses_history') {
+    coursesHistoryId ??= [];
+    if (!coursesHistoryId!.contains(id)) {
+      coursesHistoryId!.add(id);
+      // Add the course to the courseHistories list
+      final course = courseModel?.firstWhere((course) => course.id == id);
+      if (course != null) {
+        courseHistories ??= [];
+        courseHistories!.add(course);
       }
-    } else if (key == 'video_history') {
-      videosHistoryId ??= [];
-      if (!videosHistoryId!.contains(id)) {
-        videosHistoryId!.add(id);
-      }
-    } else {
-      emit(SetHistoriesErrorState(error: "Invalid key"));
-      return;
     }
-
-    print(videosHistoryId);
-
-    // Convert the updated list to a string
-    String value = key == 'courses_history'
-        ? jsonEncode(coursesHistoryId)
-        : jsonEncode(videosHistoryId);
-
-    final result = await homeUsecase.setHistories(
-      key,
-      value,
-    );
-    result.fold(
-      (l) {
-        emit(SetHistoriesErrorState(error: l));
-      },
-      (r) async {
-        print(r.settings?[0].value);
-
-        emit(SetHistoriesSuccessState());
-      },
-    );
+  } else if (key == 'video_history') {
+    videosHistoryId ??= [];
+    if (!videosHistoryId!.contains(id)) {
+      videosHistoryId!.add(id);
+      // Add the material to the materialsHistories list
+      final material = materials?.firstWhere((material) => material.id == id);
+      if (material != null) {
+        materialsHistories ??= [];
+        materialsHistories!.add(material);
+      }
+    }
+  } else {
+    emit(SetHistoriesErrorState(error: "Invalid key"));
+    return;
   }
+
+  print(videosHistoryId);
+
+  // Convert the updated list to a string
+  String value = key == 'courses_history'
+      ? jsonEncode(coursesHistoryId)
+      : jsonEncode(videosHistoryId);
+
+  final result = await homeUsecase.setHistories(
+    key,
+    value,
+  );
+  result.fold(
+    (l) {
+      emit(SetHistoriesErrorState(error: l));
+    },
+    (r) async {
+      print(r.settings?[0].value);
+
+      emit(SetHistoriesSuccessState());
+    },
+  );
+}
 
 //================================================================================================================================
 }

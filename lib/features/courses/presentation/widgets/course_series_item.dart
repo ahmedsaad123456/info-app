@@ -23,13 +23,14 @@ class CourseSeriesItem extends StatelessWidget {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        HomeCubit.get(context)
-            .setHistories('video_history', materialEntity.id ?? 0);
+     
         if (materialEntity.filename != null) {
           String type = materialEntity.filename!.split('.').last;
           bool isVideo = type != "png" && type != "jpg" && type != "jpeg";
 
           if (isVideo) {
+               HomeCubit.get(context)
+            .setHistories('video_history', materialEntity.id ?? 0);
             Navigator.push(
               context,
               MaterialPageRoute<void>(
@@ -62,6 +63,7 @@ class CourseSeriesItem extends StatelessWidget {
                     side: BorderSide(
                         width: 1, color: Colors.white.withOpacity(0.08)))),
             height: 100,
+            width: double.infinity,
             child: materialEntity.preview == null
                 ? Image.asset(
                     'assets/icons/course2.png',
