@@ -2,6 +2,8 @@ import 'package:dartz/dartz.dart';
 import 'package:info_app/features/home/data/models/course_model.dart';
 import 'package:info_app/features/home/data/models/favorites_model.dart';
 import 'package:info_app/features/home/data/models/history_model.dart';
+import 'package:info_app/features/home/data/models/material_model.dart';
+import 'package:info_app/features/home/data/models/story_model.dart';
 import 'package:info_app/features/home/domain/entities/request_favorites_entity.dart';
 import 'package:info_app/features/home/domain/repositories/home_repository.dart';
 import 'package:info_app/features/login_screen/data/models/code_model.dart';
@@ -31,7 +33,23 @@ class HomeUsecase {
   }
 
 //================================================================================================================================
-  Future<Either<String, HistoryResponseModel>> getHistories() async {
+  Future<Either<String, StoryResponseModel>> getStories() async {
+    return await homeRepository.getStories();
+  }
+
+//================================================================================================================================
+  Future<Either<String, HistoryModel>> getHistories() async {
     return await homeRepository.getHistories();
+  }
+
+//================================================================================================================================
+  Future<Either<String, HistoryModel>> setHistories(
+      String key, String value) async {
+    return await homeRepository.setHistories(key, value);
+  }
+
+//================================================================================================================================
+  Future<Either<String, MaterialResponseModel>> getMaterials() async {
+    return await homeRepository.getMaterials();
   }
 }

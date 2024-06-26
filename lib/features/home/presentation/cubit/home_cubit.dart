@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:info_app/core/shared/datasources/local/cache_helper.dart';
@@ -6,7 +8,9 @@ import 'package:info_app/features/home/data/models/favorites_model.dart';
 import 'package:info_app/features/home/data/models/history_model.dart';
 import 'package:info_app/features/home/domain/entities/course_entity.dart';
 import 'package:info_app/features/home/domain/entities/history_entity.dart';
+import 'package:info_app/features/home/domain/entities/material_entity.dart';
 import 'package:info_app/features/home/domain/entities/request_favorites_entity.dart';
+import 'package:info_app/features/home/domain/entities/story_entity.dart';
 import 'package:info_app/features/home/domain/usecases/home_usecase.dart';
 import 'package:info_app/features/home/presentation/cubit/home_satate.dart';
 import 'package:info_app/features/home/presentation/pages/home_page.dart';
@@ -372,22 +376,133 @@ class HomeCubit extends Cubit<HomeStates> {
 
 //================================================================================================================================
 
-  List<HistoryEntity>? histories;
-  Future<void> getHistories() async {
-    if (histories == null) {
-      emit(GetHistoriesLoadingState());
-      final result = await homeUsecase.getHistories();
+  List<StoryEntity>? stories;
+  Future<void> getStories() async {
+    if (stories == null) {
+      emit(GetStoriesLoadingState());
+      final result = await homeUsecase.getStories();
       result.fold(
         (l) {
-          emit(GetHistoriesErrorState(error: l));
+          emit(GetStoriesErrorState(error: l));
         },
         (r) async {
-          histories = r.histories;
+          stories = r.histories;
           print(r);
 
-          emit(GetHistoriesSuccessState());
+          emit(GetStoriesSuccessState());
         },
       );
     }
   }
+
+//================================================================================================================================
+
+  List<MaterialEntity>? materials;
+
+  Future<void> getMaterials() async {
+    emit(GetMaterialsLoadingState());
+    final result = await homeUsecase.getMaterials();
+    result.fold(
+      (l) {
+        emit(GetMaterialsErrorState(error: l));
+      },
+      (r) async {
+        materials = r.materials;
+
+        emit(GetMaterialsSuccessState());
+      },
+    );
+  }
+//================================================================================================================================
+
+  List<int>? coursesHistoryId;
+  List<int>? videosHistoryId;
+  List<CourseEntity>? courseHistories;
+  List<MaterialEntity>? materialsHistories;
+
+  Future<void> getHistories() async {
+    emit(GetHistoriesLoadingState());
+    final result = await homeUsecase.getHistories();
+    result.fold(
+      (l) {
+        emit(GetHistoriesErrorState(error: l));
+      },
+      (r) async {
+        await getCourses();
+        await getMaterials();
+        for (var setting in r.settings!) {
+          if (setting.key == 'course_history') {
+            coursesHistoryId = setting.value;
+          } else if (setting.key == 'video_history') {
+            videosHistoryId = setting.value;
+          }
+        }
+
+        // Populate courseHistories
+        if (coursesHistoryId != null && courseModel != null) {
+          courseHistories = courseModel!
+              .where((course) => coursesHistoryId!.contains(course.id))
+              .toList();
+        }
+
+        // Populate materialsHistories
+        if (videosHistoryId != null && materials != null) {
+          materialsHistories = materials!
+              .where((material) => videosHistoryId!.contains(material.id))
+              .toList();
+        }
+
+        print(coursesHistoryId);
+        print(videosHistoryId);
+        print(courseHistories);
+        print(materialsHistories);
+
+        emit(GetHistoriesSuccessState());
+      },
+    );
+  }
+
+//================================================================================================================================
+  Future<void> setHistories(String key, int id) async {
+    emit(SetHistoriesLoadingState());
+    // Add the ID to the correct list based on the key
+    if (key == 'course_history') {
+      coursesHistoryId ??= [];
+      if (!coursesHistoryId!.contains(id)) {
+        coursesHistoryId!.add(id);
+      }
+    } else if (key == 'video_history') {
+      videosHistoryId ??= [];
+      if (!videosHistoryId!.contains(id)) {
+        videosHistoryId!.add(id);
+      }
+    } else {
+      emit(SetHistoriesErrorState(error: "Invalid key"));
+      return;
+    }
+
+    print(videosHistoryId);
+
+    // Convert the updated list to a string
+    String value = key == 'courses_history'
+        ? jsonEncode(coursesHistoryId)
+        : jsonEncode(videosHistoryId);
+
+    final result = await homeUsecase.setHistories(
+      key,
+      value,
+    );
+    result.fold(
+      (l) {
+        emit(SetHistoriesErrorState(error: l));
+      },
+      (r) async {
+        print(r.settings?[0].value);
+
+        emit(SetHistoriesSuccessState());
+      },
+    );
+  }
+
+//================================================================================================================================
 }

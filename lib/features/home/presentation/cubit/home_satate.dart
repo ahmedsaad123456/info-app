@@ -4,7 +4,6 @@ class HomeInitialState extends HomeStates {}
 
 class HomeBottomNavState extends HomeStates {}
 
-
 class GetCoursesLoadingState extends HomeStates {}
 
 class GetCoursesErrorState extends HomeStates {
@@ -13,7 +12,6 @@ class GetCoursesErrorState extends HomeStates {
 }
 
 class GetCoursesSuccessState extends HomeStates {}
-
 
 class GetFavoritesLoadingState extends HomeStates {}
 
@@ -24,8 +22,6 @@ class GetFavoritesErrorState extends HomeStates {
 
 class GetFavoritesSuccessState extends HomeStates {}
 
-
-
 class SetFavoritesLoadingState extends HomeStates {}
 
 class SetFavoritesErrorState extends HomeStates {
@@ -35,6 +31,15 @@ class SetFavoritesErrorState extends HomeStates {
 
 class SetFavoritesSuccessState extends HomeStates {}
 
+class GetStoriesLoadingState extends HomeStates {}
+
+class GetStoriesErrorState extends HomeStates {
+  final String error;
+  GetStoriesErrorState({required this.error});
+}
+
+class GetStoriesSuccessState extends HomeStates {}
+
 class GetHistoriesLoadingState extends HomeStates {}
 
 class GetHistoriesErrorState extends HomeStates {
@@ -43,3 +48,22 @@ class GetHistoriesErrorState extends HomeStates {
 }
 
 class GetHistoriesSuccessState extends HomeStates {}
+
+class SetHistoriesLoadingState extends HomeStates {}
+
+class SetHistoriesErrorState extends HomeStates {
+  final String error;
+  SetHistoriesErrorState({required this.error});
+}
+
+class SetHistoriesSuccessState extends HomeStates {}
+
+
+class GetMaterialsLoadingState extends HomeStates {}
+
+class GetMaterialsErrorState extends HomeStates {
+  final String error;
+  GetMaterialsErrorState({required this.error});
+}
+
+class GetMaterialsSuccessState extends HomeStates {}

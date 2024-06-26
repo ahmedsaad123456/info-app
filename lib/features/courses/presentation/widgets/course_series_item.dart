@@ -5,6 +5,7 @@ import 'package:info_app/features/courses/presentation/widgets/recommended_conta
 import 'package:info_app/features/courses/course_state_enum.dart';
 import 'package:info_app/features/courses/presentation/widgets/video_player_widget.dart';
 import 'package:info_app/features/home/domain/entities/material_entity.dart';
+import 'package:info_app/features/home/presentation/cubit/home_cubit.dart';
 
 class CourseSeriesItem extends StatelessWidget {
   const CourseSeriesItem({
@@ -26,6 +27,7 @@ class CourseSeriesItem extends StatelessWidget {
           String type = materialEntity.filename!.split('.').last;
           bool isVideo = type != "png" && type != "jpg" && type != "jpeg";
           if (isVideo) {
+           
             Navigator.push(
               context,
               MaterialPageRoute<void>(
@@ -33,7 +35,11 @@ class CourseSeriesItem extends StatelessWidget {
                   videoUrl: BASE_URL_VIDEO + (materialEntity.filename ?? ""),
                 ),
               ),
+              
             );
+             HomeCubit.get(context)
+                .setHistories('video_history', materialEntity.id ?? 0);
+            print(materialEntity.id);
           }
         }
       },

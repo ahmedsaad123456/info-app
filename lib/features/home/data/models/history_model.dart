@@ -2,58 +2,55 @@ import 'package:info_app/features/home/domain/entities/history_entity.dart';
 
 class HistoryModel extends HistoryEntity {
   HistoryModel({
-    super.id,
-    super.name,
-    super.preview,
-    super.image,
-    super.cta,
-    super.text,
-
+    super.result,
+    List<SettingModel>? super.settings,
   });
 
-  HistoryModel.fromJson(Map<String, dynamic> json) {
-    id = json['id'];
-    name = json['name'];
-    preview = json['preview'];
-    image = json['image'];
-    cta = json['cta'];
-    text = json['text'];
+  factory HistoryModel.fromJson(Map<String, dynamic> json) {
+    return HistoryModel(
+      result: json['result'],
+      settings: (json['settings'] as List<dynamic>?)
+          ?.map((e) => SettingModel.fromJson(e as Map<String, dynamic>))
+          .toList(),
+    );
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = <String, dynamic>{};
-    data['id'] = id;
-    data['name'] = name;
-    data['preview'] = preview;
-    data['image'] = image;
-    data['cta'] = cta;
-    data['text'] = text;
-    return data;
+    return {
+      'result': result,
+      'settings': settings?.map((e) => (e as SettingModel).toJson()).toList(),
+    };
   }
 }
 
-class HistoryResponseModel extends HistoryResponseEntity {
-  HistoryResponseModel({
-    super.result,
-    super.histories,
+class SettingModel extends SettingEntity {
+  SettingModel({
+    super.id,
+    super.accountId,
+    super.key,
+    super.value,
   });
 
-  HistoryResponseModel.fromJson(Map<String, dynamic> json) {
-    result = json['result'];
-    if (json['histories'] != null) {
-      histories = <HistoryModel>[];
-      json['histories'].forEach((v) {
-        histories!.add(HistoryModel.fromJson(v));
-      });
-    }
+  factory SettingModel.fromJson(Map<String, dynamic> json) {
+    return SettingModel(
+      id: json['id'],
+      accountId: json['account_id'],
+      key: json['key'],
+      value: (json['value'] as String)
+          .replaceAll('[', '')
+          .replaceAll(']', '')
+          .split(',')
+          .map((e) => int.parse(e.trim()))
+          .toList(),
+    );
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = <String, dynamic>{};
-    data['result'] = result;
-    if (histories != null) {
-      data['histories'] = histories!.map((v) => (v as HistoryModel).toJson()).toList();
-    }
-    return data;
+    return {
+      'id': id,
+      'account_id': accountId,
+      'key': key,
+      'value': value.toString(),
+    };
   }
 }

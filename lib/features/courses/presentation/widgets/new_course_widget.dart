@@ -38,6 +38,7 @@ class NewCourseWidget extends StatelessWidget {
         return GestureDetector(
           onTap: () {
             CourseCubit.get(context).getCourse(courseEntity.id ?? 0);
+            homeCubit.setHistories('course_history', courseEntity.id??0);
             Navigator.push(
               context,
               MaterialPageRoute(

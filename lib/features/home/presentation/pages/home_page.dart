@@ -37,10 +37,10 @@ class HomePage extends StatelessWidget {
                         ),
                       ],
                     ),
-                    const Padding(
+                    Padding(
                       padding: EdgeInsets.symmetric(vertical: 32),
                       child: StoryListView(
-                        histories: [],
+                        stories: homeCubit.stories,
                       ),
                     ),
                     Image.asset(
@@ -92,7 +92,9 @@ class HomePage extends StatelessWidget {
                       ),
                     ),
                     32.ph,
-                    const BrowseWidget(
+                    if(homeCubit.materialsHistories != null) 
+                    BrowseWidget(
+                      materials:homeCubit.materialsHistories ?? [] ,
                       title: 'Продолжить просмотр',
                     ),
                     32.ph,

@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:image_network/image_network.dart';
 import 'package:info_app/core/constants.dart';
+import 'package:info_app/features/home/presentation/cubit/home_cubit.dart';
 import 'package:info_app/features/home/presentation/widgets/browse_widget.dart';
 import 'package:info_app/features/login_screen/data/models/code_model.dart';
 import 'package:info_app/features/login_screen/presentation/pages/login_page.dart';
@@ -158,7 +159,9 @@ class ProfilePage extends StatelessWidget {
             const SizedBox(
               height: 32,
             ),
-            const BrowseWidget(
+            if(HomeCubit.get(context).materialsHistories != null) 
+            BrowseWidget(
+              materials: HomeCubit.get(context).materialsHistories ?? [],
               title: 'Продолжить просмотр',
               subtitle:
                   'Здесь ты найдёшь видео, которые ты уже начал смотреть и приостановился',

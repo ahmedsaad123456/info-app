@@ -1,29 +1,23 @@
 class HistoryEntity {
-  int? id;
-  String? name;
-  String? preview;
-  String? image;
-  String? cta;
-  String? text;
-
+  final bool? result;
+  final List<SettingEntity>? settings;
 
   HistoryEntity({
-    this.id,
-    this.name,
-    this.preview,
-    this.image,
-    this.cta,
-    this.text,
-
+    this.result,
+    this.settings,
   });
 }
 
-class HistoryResponseEntity {
-  bool? result;
-  List<HistoryEntity>? histories;
+class SettingEntity {
+  final int? id;
+  final int? accountId;
+  final String? key;
+  final List<int>? value;
 
-  HistoryResponseEntity({
-    this.result,
-    this.histories,
+  SettingEntity({
+    this.id,
+    this.accountId,
+    this.key,
+    this.value,
   });
 }

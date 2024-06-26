@@ -19,12 +19,10 @@ class HistoryCoursesPage extends StatelessWidget {
       },
       builder: (context, state) {
         List<CourseEntity> courses =
-            HomeCubit.get(context).responseFavoritesModel?.favorites?.courses ??
+            HomeCubit.get(context).courseHistories ??
                 [];
         List<MaterialEntity> materials = HomeCubit.get(context)
-                .responseFavoritesModel
-                ?.favorites
-                ?.materials ??
+                .materialsHistories??
             [];
         return Scaffold(
           backgroundColor: Colors.black,
@@ -111,6 +109,7 @@ class HistoryCoursesPage extends StatelessWidget {
                           ),
                         ],
                       ),
+                      if(courses.isNotEmpty)
                     ListView.builder(
                       itemCount: courses.length,
                       physics: const NeverScrollableScrollPhysics(),

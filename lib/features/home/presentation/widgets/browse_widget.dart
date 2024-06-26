@@ -4,10 +4,11 @@ import 'package:info_app/features/courses/course_state_enum.dart';
 import 'package:info_app/features/home/domain/entities/material_entity.dart';
 
 class BrowseWidget extends StatelessWidget {
-  const BrowseWidget({super.key, this.subtitle, this.title});
+  const BrowseWidget({super.key, this.subtitle, this.title, required this.materials});
 
   final String? subtitle;
   final String? title;
+  final List<MaterialEntity> materials;
 
   @override
   Widget build(BuildContext context) {
@@ -41,7 +42,7 @@ class BrowseWidget extends StatelessWidget {
           height: 100,
           child: ListView.builder(
             shrinkWrap: true,
-            itemCount: 15,
+            itemCount: materials.length,
             padding: const EdgeInsets.only(left: 20),
             scrollDirection: Axis.horizontal,
             itemBuilder: (context, index) {
@@ -51,7 +52,7 @@ class BrowseWidget extends StatelessWidget {
                       aspectRatio: 180 / 100,
                       child: CourseSeriesItem(
                           containerTitle: 'Просмотрено',
-                          materialEntity: MaterialEntity(),
+                          materialEntity: materials[index],
                           courseStateEnum: CourseStateEnum.PURCHASED)));
             },
           ),

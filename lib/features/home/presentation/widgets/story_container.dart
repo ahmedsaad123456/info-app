@@ -1,15 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:info_app/core/constants.dart';
-import 'package:info_app/features/home/domain/entities/history_entity.dart';
+import 'package:info_app/features/home/domain/entities/story_entity.dart';
 import 'package:info_app/features/home/presentation/widgets/story_widget.dart';
 
 class StoryContainer extends StatelessWidget {
   const StoryContainer(
-      {super.key, required this.isWatched, required this.historyModel, required this.histories});
+      {super.key,
+      required this.isWatched,
+      required this.historyModel,
+      required this.histories});
 
   final bool isWatched;
-  final HistoryEntity? historyModel;
-  final List<HistoryEntity>? histories;
+  final StoryEntity? historyModel;
+  final List<StoryEntity>? histories;
 
   @override
   Widget build(BuildContext context) {
