@@ -39,7 +39,9 @@ class HomePage extends StatelessWidget {
                     ),
                     const Padding(
                       padding: EdgeInsets.symmetric(vertical: 32),
-                      child: StoryListView(),
+                      child: StoryListView(
+                        histories: [],
+                      ),
                     ),
                     Image.asset(
                       'assets/icons/home3.png',

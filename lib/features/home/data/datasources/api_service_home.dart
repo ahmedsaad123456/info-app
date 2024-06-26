@@ -3,10 +3,13 @@ import 'package:info_app/core/error/execute_and_handle_error.dart';
 import 'package:info_app/core/shared/datasources/remote/api_base.dart';
 import 'package:info_app/features/home/data/models/course_model.dart';
 import 'package:info_app/features/home/data/models/favorites_model.dart';
+import 'package:info_app/features/home/data/models/history_model.dart';
 import 'package:info_app/features/home/domain/entities/request_favorites_entity.dart';
 import 'package:info_app/features/login_screen/data/models/code_model.dart';
 
 class ApiServiceHome extends ApiBase {
+//=================================================================================================================================
+
   Future<CourseResponseModel> getCourses() async {
     return executeAndHandleErrorServer<CourseResponseModel>(() async {
       final response = await get('$BASE_URL/courses', headers: {
@@ -16,6 +19,8 @@ class ApiServiceHome extends ApiBase {
     });
   }
 
+//=================================================================================================================================
+
   Future<ResponseFavoritesModel> getFavorites() async {
     return executeAndHandleErrorServer<ResponseFavoritesModel>(() async {
       final response = await get('$BASE_URL/account/favorites', headers: {
@@ -24,6 +29,8 @@ class ApiServiceHome extends ApiBase {
       return ResponseFavoritesModel.fromJson(response.json);
     });
   }
+
+//=================================================================================================================================
 
   Future<CodeModel> setFavorites(RequestFavoritesEntity request) async {
     return executeAndHandleErrorServer<CodeModel>(() async {
@@ -36,25 +43,13 @@ class ApiServiceHome extends ApiBase {
     });
   }
 
-  Future<CodeModel> getViewed(RequestFavoritesEntity request) async {
-    return executeAndHandleErrorServer<CodeModel>(() async {
-      final response = await post('$BASE_URL/account/favorites', body: {
-        'favorites': request.toJson()
-      }, headers: {
+//=================================================================================================================================
+  Future<HistoryResponseModel> gethistories() async {
+    return executeAndHandleErrorServer<HistoryResponseModel>(() async {
+      final response = await get('$BASE_URL/histories', headers: {
         'Authorization': token ?? "",
       });
-      return CodeModel.fromJson(response.json);
-    });
-  }
-
-  Future<CodeModel> setViewed(RequestFavoritesEntity request) async {
-    return executeAndHandleErrorServer<CodeModel>(() async {
-      final response = await post('$BASE_URL/account/favorites', body: {
-        'favorites': request.toJson()
-      }, headers: {
-        'Authorization': token ?? "",
-      });
-      return CodeModel.fromJson(response.json);
+      return HistoryResponseModel.fromJson(response.json);
     });
   }
 }
