@@ -38,7 +38,7 @@ class NewCourseWidget extends StatelessWidget {
         return GestureDetector(
           onTap: () {
             CourseCubit.get(context).getCourse(courseEntity.id ?? 0);
-            homeCubit.setHistories('course_history', courseEntity.id??0);
+            homeCubit.setHistories('course_history', courseEntity.id ?? 0);
             Navigator.push(
               context,
               MaterialPageRoute(
@@ -100,7 +100,7 @@ class NewCourseWidget extends StatelessWidget {
                                 )
                               : Image.network(
                                   '$BASE_URL_PREVIEW${courseEntity.preview}',
-                                  fit: BoxFit.cover,
+                                  fit: BoxFit.fitWidth,
                                 )),
                     ),
                   ),
