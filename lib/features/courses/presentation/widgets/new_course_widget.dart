@@ -89,7 +89,7 @@ class NewCourseWidget extends StatelessWidget {
                         ).createShader(bounds);
                       },
                       child: Container(
-                          width: isHistory ? double.infinity : 350,
+                          width: MediaQuery.sizeOf(context).width - 40,
                           height: 220,
                           decoration: const BoxDecoration(),
                           child: courseEntity.preview == null
@@ -99,7 +99,7 @@ class NewCourseWidget extends StatelessWidget {
                                 )
                               : Image.network(
                                   '$BASE_URL_PREVIEW${courseEntity.preview}',
-                                  fit: BoxFit.fill,
+                                  fit: BoxFit.cover,
                                 )),
                     ),
                   ),
@@ -160,14 +160,6 @@ class NewCourseWidget extends StatelessWidget {
                         isNotPlus: isNotPlus,
                       ),
                     )
-                  else if (courseStateEnum == CourseStateEnum.VIEWED)
-                    Positioned(
-                      top: 20,
-                      left: 25,
-                      child: RecommendedContainer(
-                        title: title ?? '',
-                      ),
-                    ),
                 ],
               ),
             ),

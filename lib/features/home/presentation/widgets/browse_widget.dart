@@ -4,26 +4,27 @@ import 'package:info_app/features/courses/course_state_enum.dart';
 import 'package:info_app/features/home/domain/entities/material_entity.dart';
 
 class BrowseWidget extends StatelessWidget {
-  const BrowseWidget({super.key, this.subtitle});
+  const BrowseWidget({super.key, this.subtitle, this.title});
 
   final String? subtitle;
+  final String? title;
 
   @override
   Widget build(BuildContext context) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        const Padding(
-          padding: EdgeInsets.symmetric(horizontal: 16),
+        Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 20),
           child: Text(
-            'Продолжить просмотр',
-            style: TextStyle(
+            title ?? "",
+            style: const TextStyle(
                 fontWeight: FontWeight.w500, fontSize: 24, color: Colors.white),
           ),
         ),
         if (subtitle != null)
           Padding(
-            padding: const EdgeInsets.only(right: 16, bottom: 10, left: 16),
+            padding: const EdgeInsets.only(right: 20, bottom: 10, left: 16),
             child: Text(
               subtitle ?? '',
               style: TextStyle(
@@ -34,14 +35,14 @@ class BrowseWidget extends StatelessWidget {
           )
         else
           const SizedBox(
-            height: 10,
+            height: 4,
           ),
         SizedBox(
           height: 100,
           child: ListView.builder(
             shrinkWrap: true,
             itemCount: 15,
-            padding: const EdgeInsets.only(left: 16),
+            padding: const EdgeInsets.only(left: 20),
             scrollDirection: Axis.horizontal,
             itemBuilder: (context, index) {
               return Padding(

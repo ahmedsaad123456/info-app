@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:info_app/core/constants.dart';
 
 class CustomTextField extends StatelessWidget {
   const CustomTextField(
       {super.key,
       this.onChanged,
       this.focusNode,
-      required this.controller,
+      this.controller,
       this.obscureText,
       this.validator,
       this.labelText,
@@ -20,7 +21,7 @@ class CustomTextField extends StatelessWidget {
 
   final void Function(String)? onChanged;
   final FocusNode? focusNode;
-  final TextEditingController controller;
+  final TextEditingController? controller;
   final bool? obscureText;
   final String? Function(String?)? validator;
   final String? labelText;
@@ -44,8 +45,9 @@ class CustomTextField extends StatelessWidget {
       ),
       child: Row(
         children: [
+          15.pw,
           if (iconData != null)
-            Padding(padding: const EdgeInsets.all(8.0), child: iconData),
+            Padding(padding: const EdgeInsets.all(0.0), child: iconData),
           Expanded(
             child: TextFormField(
               cursorColor: Colors.white,
@@ -56,14 +58,20 @@ class CustomTextField extends StatelessWidget {
               controller: controller,
               validator: validator,
               style: const TextStyle(
-                  fontWeight: FontWeight.w400,
                   color: Colors.white,
                   fontSize: 20,
+                  fontFamily: 'SuisseIntl',
+                  fontWeight: FontWeight.w400,
+                  height: 1.2,
                   fontFeatures: <FontFeature>[FontFeature.slashedZero()]),
               decoration: InputDecoration(
                 counterText: '',
                 hintStyle: TextStyle(
                   color: Colors.white.withOpacity(0.12),
+                  fontSize: 20,
+                  fontFamily: 'SuisseIntl',
+                  fontWeight: FontWeight.w400,
+                  height: 1.2,
                   fontFeatures: const <FontFeature>[FontFeature.slashedZero()],
                 ),
                 contentPadding: padding,

@@ -5,8 +5,6 @@ import 'package:info_app/features/courses/presentation/widgets/recommended_conta
 import 'package:info_app/features/courses/course_state_enum.dart';
 import 'package:info_app/features/courses/presentation/widgets/video_player_widget.dart';
 import 'package:info_app/features/home/domain/entities/material_entity.dart';
-import 'package:video_player/video_player.dart';
-import 'package:web_video_player/player.dart';
 
 class CourseSeriesItem extends StatelessWidget {
   const CourseSeriesItem({
@@ -22,86 +20,92 @@ class CourseSeriesItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Stack(
-      children: [
-        Container(
-          decoration: ShapeDecoration(
-            gradient: courseStateEnum == CourseStateEnum.NOT_PURCHASED
-                ? const LinearGradient(
-                    begin: Alignment.centerRight,
-                    end: Alignment.centerLeft,
-                    colors: [
-                      Color.fromRGBO(255, 136, 136, 1),
-                      Color.fromRGBO(255, 55, 151, 1),
-                    ],
-                  )
-                : null,
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(8),
-              side: BorderSide(
-                width: 1,
-                color: Colors.white.withOpacity(0.08),
+    return GestureDetector(
+      onTap: () {
+        if (materialEntity.filename != null) {
+          String type = materialEntity.filename!.split('.').last;
+          bool isVideo = type != "png" && type != "jpg" && type != "jpeg";
+          if (isVideo) {
+            Navigator.push(
+              context,
+              MaterialPageRoute<void>(
+                builder: (BuildContext context) => VideoPlayerWidget(
+                  videoUrl: BASE_URL_VIDEO + (materialEntity.filename ?? ""),
+                ),
               ),
-            ),
-          ),
-          height: 100,
-          child: GestureDetector(
-            onTap: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute<void>(
-                  builder: (BuildContext context) => const VideoPlayerWidget(
-                    videoUrl:
-                        'https://flutter.github.io/assets-for-api-docs/assets/videos/butterfly.mp4',
+            );
+          }
+        }
+      },
+      child: Stack(
+        children: [
+          Container(
+            decoration: ShapeDecoration(
+                gradient: courseStateEnum == CourseStateEnum.NOT_PURCHASED
+                    ? const LinearGradient(
+                        begin: Alignment.centerRight,
+                        end: Alignment.centerLeft,
+                        colors: [
+                          Color.fromRGBO(255, 136, 136, 1),
+                          Color.fromRGBO(255, 55, 151, 1),
+                        ],
+                      )
+                    : null,
+                shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(8),
+                    side: BorderSide(
+                        width: 1, color: Colors.white.withOpacity(0.08)))),
+            height: 100,
+            child: materialEntity.preview == null
+                ? Image.asset(
+                    'assets/icons/course2.png',
+                    fit: BoxFit.cover,
+                  )
+                : Image.network(
+                    '$BASE_URL_PREVIEW${materialEntity.preview}',
+                    fit: BoxFit.fill,
                   ),
-                ),
-              );
-            },
-            child: const Stack(
+          ),
+          Positioned(
+            bottom: 10,
+            left: 10,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                WebVideoPlayer(
-                  url:
-                      'https://flutter.github.io/assets-for-api-docs/assets/videos/butterfly.mp4',
-                  autoPlay: false,
+                Text(
+                  materialEntity.name ?? '',
+                  style: const TextStyle(
+                      fontSize: 16,
+                      color: Colors.white,
+                      fontWeight: FontWeight.w500),
                 ),
-                Positioned.fill(child: SizedBox()),
+                const Text(
+                  '20/18',
+                  style: TextStyle(
+                      fontSize: 14,
+                      color: Colors.white,
+                      fontWeight: FontWeight.w400),
+                ),
               ],
             ),
           ),
-        ),
-        Positioned(
-          bottom: 10,
-          left: 10,
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(
-                materialEntity.name ?? '',
-                style: const TextStyle(
-                  fontSize: 16,
-                  color: Colors.white,
-                  fontWeight: FontWeight.w500,
-                ),
-              ),
-            ],
-          ),
-        ),
-        courseStateEnum == CourseStateEnum.NOT_PURCHASED
-            ? const Positioned(
-                top: 10,
-                left: 10,
-                child: BuyRow(),
-              )
-            : courseStateEnum == CourseStateEnum.VIEWED
-                ? Positioned(
-                    top: 10,
-                    left: 10,
-                    child: RecommendedContainer(
-                      title: containerTitle,
-                    ),
-                  )
-                : const SizedBox(),
-      ],
+          courseStateEnum == CourseStateEnum.NOT_PURCHASED
+              ? const Positioned(
+                  top: 10,
+                  left: 10,
+                  child: BuyRow(),
+                )
+              : courseStateEnum == CourseStateEnum.VIEWED
+                  ? Positioned(
+                      top: 10,
+                      left: 10,
+                      child: RecommendedContainer(
+                        title: containerTitle,
+                      ),
+                    )
+                  : const SizedBox(),
+        ],
+      ),
     );
   }
 }

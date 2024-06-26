@@ -17,134 +17,134 @@ class CodeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final authCubit = AuthCubit.get(context);
+    var size = MediaQuery.sizeOf(context);
     return Container(
       decoration: const BoxDecoration(
           image: DecorationImage(
               fit: BoxFit.cover, image: AssetImage('assets/icons/shape4.png'))),
       child: Scaffold(
         backgroundColor: Colors.transparent,
-        body: SingleChildScrollView(
-          child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 32),
-            child: SafeArea(
-              child: BlocConsumer<AuthCubit, AuthState>(
-                listener: (context, state) {
-                  if (state is CodeSuccessState) {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute<void>(
-                        builder: (BuildContext context) => const Menu(),
-                      ),
-                    );
-                  }
-                },
-                builder: (context, state) {
-                  return Form(
-                    key: _formKey,
-                    child: Column(
-                      children: [
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            SvgPicture.asset(
-                              'assets/icons/logo.svg',
-                              color: Colors.white,
-                            ),
-                          ],
-                        ),
-                        const SizedBox(
-                          height: 120,
-                        ),
-                        const Text(
-                          "Введите код",
-                          style: TextStyle(
-                              color: Colors.white,
-                              fontSize: 28,
-                              fontWeight: FontWeight.w500),
-                        ),
-                        const SizedBox(
-                          height: 8,
-                        ),
-                        Text(
-                          'Для подтверждения входа в приложение мы отправили вам код по электронной почте',
-                          textAlign: TextAlign.center,
-                          style: TextStyle(
-                            fontSize: 16,
-                            color: Colors.white.withOpacity(0.6),
-                          ),
-                        ),
-                        const SizedBox(
-                          height: 32,
-                        ),
-                        PinputWidget(
-                          controller: authCubit.pinPutontroller,
-                          onChanged: authCubit.changePinput,
-                        ),
-                        const SizedBox(
-                          height: 100,
-                        ),
-                        Text(
-                          'Войти с помощью',
-                          style: TextStyle(
-                              fontSize: 14,
-                              color: Colors.white.withOpacity(0.6)),
-                        ),
-                        const SizedBox(
-                          height: 16,
-                        ),
-                        Container(
-                            decoration: BoxDecoration(
-                                color: Colors.black.withOpacity(0.12),
-                                borderRadius: BorderRadius.circular(40)),
-                            child: Image.asset('assets/icons/social.png')),
-                        const SizedBox(
-                          height: 16,
-                        ),
-                        authCubit.isPinputDisabled
-                            ? ButtonWidget(
-                                text: 'Получить код',
-                                height: 52,
-                                color: const Color.fromRGBO(248, 32, 110, 1),
-                                textColor: Colors.white.withOpacity(0.48),
-                              )
-                            : ButtonWidget(
-                                text: 'Получить код',
-                                height: 52,
-                                color: const Color.fromRGBO(248, 32, 110, 1),
-                                textColor: Colors.white,
-                                onTap: () {
-                                  authCubit.confirmCode();
-                                },
-                              ),
-                        const SizedBox(
-                          height: 26,
-                        ),
-                        RichText(
-                          textAlign: TextAlign.center,
-                          text: TextSpan(
-                            style: TextStyle(
-                                fontSize: 14,
-                                color: Colors.white.withOpacity(0.6),
-                                letterSpacing: -0.42),
-                            children: [
-                              const TextSpan(
-                                  text:
-                                      'Нажимая на кнопку «Продолжить», Вы соглашаетесь с '),
-                              TextSpan(
-                                  text: 'Политикой конфиденциальности',
-                                  style: const TextStyle(color: Colors.white),
-                                  recognizer: TapGestureRecognizer()
-                                    ..onTap = () async {
-                                      openUrl(context);
-                                    }),
-                            ],
-                          ),
-                        )
-                      ],
+        body: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 32),
+          child: SafeArea(
+            child: BlocConsumer<AuthCubit, AuthState>(
+              listener: (context, state) {
+                if (state is CodeSuccessState) {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute<void>(
+                      builder: (BuildContext context) => const Menu(),
                     ),
                   );
-                },
-              ),
+                }
+              },
+              builder: (context, state) {
+                return Form(
+                  key: _formKey,
+                  child: Column(
+                    children: [
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          SvgPicture.asset(
+                            'assets/icons/logo.svg',
+                            color: Colors.white,
+                          ),
+                        ],
+                      ),
+                      SizedBox(
+                        height: size.height * 0.17,
+                      ),
+                      const Text(
+                        "Введите код",
+                        style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 28,
+                            fontWeight: FontWeight.w500),
+                      ),
+                      const SizedBox(
+                        height: 4,
+                      ),
+                      Text(
+                        'Для подтверждения входа в приложение мы отправили вам код по электронной почте',
+                        textAlign: TextAlign.center,
+                        style: TextStyle(
+                          color: Colors.white.withOpacity(0.6399999856948853),
+                          fontSize: 16,
+                          fontFamily: 'SuisseIntl',
+                          fontWeight: FontWeight.w400,
+                          height: 1.2,
+                          letterSpacing: -0.48,
+                        ),
+                      ),
+                      const SizedBox(
+                        height: 24,
+                      ),
+                      PinputWidget(
+                        // controller: authCubit.pinPutontroller,
+                        onChanged: authCubit.changePinput,
+                      ),
+                      const Spacer(),
+                      Text(
+                        'Войти с помощью',
+                        style: TextStyle(
+                            fontSize: 14, color: Colors.white.withOpacity(0.6)),
+                      ),
+                      const SizedBox(
+                        height: 16,
+                      ),
+                      Container(
+                          decoration: BoxDecoration(
+                              color: Colors.black.withOpacity(0.12),
+                              borderRadius: BorderRadius.circular(40)),
+                          child: Image.asset('assets/icons/social.png')),
+                      const SizedBox(
+                        height: 24,
+                      ),
+                      authCubit.isPinputDisabled
+                          ? ButtonWidget(
+                              text: 'Продолжить',
+                              height: 52,
+                              color: const Color.fromRGBO(248, 32, 110, 1),
+                              textColor: Colors.white.withOpacity(0.48),
+                            )
+                          : ButtonWidget(
+                              text: 'Получить код',
+                              height: 52,
+                              color: const Color.fromRGBO(248, 32, 110, 1),
+                              textColor: Colors.white,
+                              onTap: () {
+                                authCubit.confirmCode();
+                              },
+                            ),
+                      const SizedBox(
+                        height: 16,
+                      ),
+                      RichText(
+                        textAlign: TextAlign.center,
+                        text: TextSpan(
+                          style: TextStyle(
+                              fontSize: 14,
+                              color: Colors.white.withOpacity(0.6),
+                              letterSpacing: -0.42),
+                          children: [
+                            const TextSpan(
+                                text:
+                                    'Нажимая на кнопку «Продолжить», Вы соглашаетесь\nс '),
+                            TextSpan(
+                                text: 'Политикой конфиденциальности',
+                                style: const TextStyle(color: Colors.white),
+                                recognizer: TapGestureRecognizer()
+                                  ..onTap = () async {
+                                    openUrl(context);
+                                  }),
+                          ],
+                        ),
+                      )
+                    ],
+                  ),
+                );
+              },
             ),
           ),
         ),

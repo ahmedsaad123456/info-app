@@ -35,4 +35,26 @@ class ApiServiceHome extends ApiBase {
       return CodeModel.fromJson(response.json);
     });
   }
+
+  Future<CodeModel> getViewed(RequestFavoritesEntity request) async {
+    return executeAndHandleErrorServer<CodeModel>(() async {
+      final response = await post('$BASE_URL/account/favorites', body: {
+        'favorites': request.toJson()
+      }, headers: {
+        'Authorization': token ?? "",
+      });
+      return CodeModel.fromJson(response.json);
+    });
+  }
+
+  Future<CodeModel> setViewed(RequestFavoritesEntity request) async {
+    return executeAndHandleErrorServer<CodeModel>(() async {
+      final response = await post('$BASE_URL/account/favorites', body: {
+        'favorites': request.toJson()
+      }, headers: {
+        'Authorization': token ?? "",
+      });
+      return CodeModel.fromJson(response.json);
+    });
+  }
 }

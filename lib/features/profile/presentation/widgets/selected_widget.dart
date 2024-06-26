@@ -17,7 +17,7 @@ class SelectedWidget extends StatelessWidget {
         const Padding(
           padding: EdgeInsets.only(left: 16),
           child: Text(
-            'Продолжить просмотр',
+            'Разделы профиля',
             style: TextStyle(
                 fontWeight: FontWeight.w500, fontSize: 24, color: Colors.white),
           ),

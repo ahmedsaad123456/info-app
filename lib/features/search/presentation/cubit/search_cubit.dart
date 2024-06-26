@@ -26,7 +26,7 @@ class SearchCubit extends Cubit<SearchState> {
     _debounce = Timer(Duration(milliseconds: _debouncetime), () async {
       emit(SearchLoadingState());
 
-      final result = await searchUsecasae.search(controller.text);
+      final result = await searchUsecasae.search(query);
       result.fold(
         (l) {
           emit(SearchErrorState(error: l));

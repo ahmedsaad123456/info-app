@@ -6,23 +6,26 @@ class CourseOwnerWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Text(
-          'Наши клиенты',
-          style: TextStyle(
-              fontSize: 28, fontWeight: FontWeight.w500, color: Colors.white),
-        ),
-        SizedBox(
-          height: 15,
-        ),
-        CourseOwnerImage(),
-        SizedBox(
-          height: 10,
-        ),
-        CourseOwnerImage(),
-      ],
+    return const Padding(
+      padding: EdgeInsets.symmetric(horizontal: 20),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(
+            'Наши клиенты',
+            style: TextStyle(
+                fontSize: 28, fontWeight: FontWeight.w500, color: Colors.white),
+          ),
+          SizedBox(
+            height: 16,
+          ),
+          CourseOwnerImage(),
+          SizedBox(
+            height: 12,
+          ),
+          CourseOwnerImage(),
+        ],
+      ),
     );
   }
 }

@@ -25,6 +25,7 @@ class AuthCubit extends Cubit<AuthState> {
 
   Future<void> login() async {
     emit(AuthLoadingState());
+
     final result = await _authUseCase.login(controller.text, '');
     result.fold(
       (l) {
@@ -67,6 +68,7 @@ class AuthCubit extends Cubit<AuthState> {
   }
 
   void changePinput(String v) {
+    pinPutontroller.text = v;
     if (v.length == 4) {
       isPinputDisabled = false;
     } else {

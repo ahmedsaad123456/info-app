@@ -20,6 +20,8 @@ void main() async {
   }
 
   token = cacheHelper.getData('token');
+  token =
+      '8a40cfc63428c614105d066a2a65b1af6e9b40d7cbef007e83597f6c3bbf98ae0ca6ab88ef1925fc9e14ab733a3a8c6de182803270d4ef05ac755a81bb526237';
 
   runApp(MyApp(
     isFirstRun: isFirstRun,

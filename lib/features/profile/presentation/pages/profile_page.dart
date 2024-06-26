@@ -65,7 +65,15 @@ class ProfilePage extends StatelessWidget {
                       text: model?.account?.name ?? '',
                       style: const TextStyle(color: Color(0xFFF8206E)),
                     ),
-                    const TextSpan(text: ', доброе утро! '),
+                    const TextSpan(
+                        text: ', доброе утро! ',
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontSize: 24,
+                          fontFamily: 'Suisse Intl',
+                          fontWeight: FontWeight.w500,
+                          height: 1.2,
+                        )),
                   ],
                 ),
               ),
@@ -82,8 +90,8 @@ class ProfilePage extends StatelessWidget {
                       child: Image.network(
                         "$BASE_URL_AVATAR${model!.account!.avatar!}",
                         fit: BoxFit.fill,
-                        height: 100,
-                        width: 100,
+                        height: 96,
+                        width: 96,
                       ),
                     )
                   : Image.asset('assets/icons/avatar.png'),
@@ -151,6 +159,7 @@ class ProfilePage extends StatelessWidget {
               height: 32,
             ),
             const BrowseWidget(
+              title: 'Продолжить просмотр',
               subtitle:
                   'Здесь ты найдёшь видео, которые ты уже начал смотреть и приостановился',
             ),
@@ -188,7 +197,7 @@ class ProfilePage extends StatelessWidget {
                     color: Colors.white.withOpacity(0.64),
                     fontWeight: FontWeight.w400)),
             const SizedBox(
-              height: 32,
+              height: 20,
             ),
           ],
         );

@@ -36,7 +36,7 @@ class FilterCourseWidget extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         TitleWidget(title: title, subtitle: subtitle),
-        const SizedBox(height: 10),
+        const SizedBox(height: 16),
         Wrap(
           spacing: 8.0,
           runSpacing: 8.0,
@@ -95,9 +95,8 @@ class _ToggleButtonWidgetState extends State<ToggleButtonWidget> {
     return GestureDetector(
       onTap: toggleButton,
       child: ButtonWidget(
-        padding: 10,
+        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
         text: widget.text,
-        height: 43,
         color: isSelected ? Colors.white : Colors.white.withOpacity(0.08),
         textColor: isSelected ? Colors.black : Colors.white.withOpacity(0.64),
         boxBorder: !isSelected

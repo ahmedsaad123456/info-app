@@ -25,23 +25,27 @@ class CourseByCategory extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text(
-          title,
-          style: const TextStyle(
-              color: Colors.white, fontWeight: FontWeight.w500, fontSize: 24),
+        Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 20),
+          child: Text(
+            title,
+            style: const TextStyle(
+                color: Colors.white, fontWeight: FontWeight.w500, fontSize: 24),
+          ),
         ),
         const SizedBox(
-          height: 10,
+          height: 8,
         ),
         SizedBox(
           height: 200,
           child: ListView.builder(
             shrinkWrap: true,
             itemCount: courses.length,
+            padding: const EdgeInsets.symmetric(horizontal: 20),
             scrollDirection: Axis.horizontal,
             itemBuilder: (context, index) {
               return Padding(
-                padding: const EdgeInsets.only(right: 20),
+                padding: const EdgeInsets.only(right: 10),
                 child: NewCourseWidget(
                   courseEntity: courses[index],
                   isHistory: false,

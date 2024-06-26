@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:info_app/core/constants.dart';
 import 'package:info_app/features/courses/course_state_enum.dart';
 import 'package:info_app/features/courses/presentation/widgets/new_course_widget.dart';
 import 'package:info_app/features/home/domain/entities/course_entity.dart';
@@ -25,20 +26,23 @@ class CoursesListView extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        FilterCourseWidget(type: type, title: title, subtitle: subtitle),
-        const SizedBox(
-          height: 10,
+        Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 20),
+          child:
+              FilterCourseWidget(type: type, title: title, subtitle: subtitle),
         ),
+        16.ph,
         SizedBox(
           height: 200,
           child: ListView.builder(
             shrinkWrap: true,
             itemCount: courses.length,
             scrollDirection: Axis.horizontal,
+            padding: const EdgeInsets.symmetric(horizontal: 20),
             itemBuilder: (context, index) {
               var course = courses[index];
               return Padding(
-                  padding: const EdgeInsets.only(right: 20),
+                  padding: const EdgeInsets.only(right: 10),
                   child: NewCourseWidget(
                     courseEntity: course,
                     courseStateEnum: courseStateEnum,

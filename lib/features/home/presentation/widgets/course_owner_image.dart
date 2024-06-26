@@ -13,11 +13,11 @@ class CourseOwnerImage extends StatelessWidget {
                   borderRadius: BorderRadius.circular(8),
                   side: BorderSide(
                       width: 1, color: Colors.white.withOpacity(0.08)))),
-          height: 250,
-          width: MediaQuery.sizeOf(context).width * 0.9,
+          height: 200,
+          width: MediaQuery.sizeOf(context).width,
           child: Image.asset(
             'assets/icons/home2.png',
-            fit: BoxFit.fill,
+            fit: BoxFit.cover,
           ),
         ),
         Positioned(

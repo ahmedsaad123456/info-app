@@ -35,9 +35,13 @@ class HomeCubit extends Cubit<HomeStates> {
   }
 
   Color getIconColor(int itemIndex) {
+    return index == itemIndex ? const Color(0xFFF8206E) : Colors.white;
+  }
+
+  Color getTextColor(int itemIndex) {
     return index == itemIndex
         ? const Color(0xFFF8206E)
-        : Colors.white.withOpacity(0.64);
+        : Colors.white.withOpacity(0.6399999856948853);
   }
 
   final HomeUsecase homeUsecase;
@@ -97,13 +101,12 @@ class HomeCubit extends Cubit<HomeStates> {
         },
         (r) {
           responseFavoritesModel = r;
-            // Update the isFavorite attribute in the responseFavoritesModel list
-        if (responseFavoritesModel?.favorites?.courses != null) {
-          for (var course in responseFavoritesModel!.favorites!.courses!) {
+          // Update the isFavorite attribute in the responseFavoritesModel list
+          if (responseFavoritesModel?.favorites?.courses != null) {
+            for (var course in responseFavoritesModel!.favorites!.courses!) {
               course.isFavorite = true; // Set isFavorite to true by default
-            
+            }
           }
-        }
           updateRequestFavoritesEntity();
           emit(GetFavoritesSuccessState());
         },
@@ -130,7 +133,8 @@ class HomeCubit extends Cubit<HomeStates> {
   }
 
   CodeModel? codeModel;
-  Future<void> setFavorites(int courseId, {bool isSearch = false, BuildContext? context}) async {
+  Future<void> setFavorites(int courseId,
+      {bool isSearch = false, BuildContext? context}) async {
     emit(SetFavoritesLoadingState());
 
     // Toggle the favorite status locally in the main courseModel list
@@ -142,9 +146,8 @@ class HomeCubit extends Cubit<HomeStates> {
     }
 
     if (isSearch && context != null) {
-          SearchCubit.get(context).updateFavoriteStatus(courseId);
-        }
-
+      SearchCubit.get(context).updateFavoriteStatus(courseId);
+    }
 
     // Update the requestFavoritesEntity and responseFavoritesModel
     if (requestFavoritesEntity != null) {
@@ -180,7 +183,6 @@ class HomeCubit extends Cubit<HomeStates> {
       },
     );
   }
-
 
   List<String> selectedDemoCategories = [];
   List<String> selectedNeroCategories = [];

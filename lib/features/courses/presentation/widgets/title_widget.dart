@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:info_app/core/constants.dart';
 
 class TitleWidget extends StatelessWidget {
   const TitleWidget({
@@ -19,14 +20,17 @@ class TitleWidget extends StatelessWidget {
           style: const TextStyle(
               fontSize: 24, color: Colors.white, fontWeight: FontWeight.w500),
         ),
+        4.ph,
         Text(
           subtitle,
           style: TextStyle(
-              fontSize: 16,
-              color: Colors.white.withOpacity(
-                0.64,
-              ),
-              fontWeight: FontWeight.w400),
+            color: Colors.white.withOpacity(0.6399999856948853),
+            fontSize: 16,
+            fontFamily: 'SuisseIntl',
+            fontWeight: FontWeight.w400,
+            height: 1.2,
+            letterSpacing: -0.48,
+          ),
         ),
       ],
     );
